@@ -1,0 +1,126 @@
+set realname="Stephen Whitmore"
+set from="sww@eight45.net"
+
+#set charset = "UTF-8"
+#set locale = "en_US.UTF-8"
+
+# Use offlineimap.
+set mbox_type=Maildir
+set folder=$HOME/Mail
+set spoolfile=$HOME/Mail/sww@eight45.net/INBOX
+set header_cache="~/.mutt/cache/headers"
+set message_cachedir="~/.mutt/cache/bodies"
+set certificate_file=~/.mutt/certificates
+set mailcap_path=~/.mutt/mailcap
+set record = "~/Mail/sww@eight45.net/Sent"
+set postponed = "~/Mail/sww@eight45.net/Drafts"
+
+bind editor <Tab> complete-query
+
+#set index_format="%4C %Z %[%b %d %H:%M] %-19.19L (%4l) %s"
+#set beep_new
+#
+# Side Bar -------------------------------------------
+unset mark_old  # Read/unread is good enough, thanks
+set sidebar_delim = ' |'
+set sidebar_visible = yes
+set sidebar_width = 20
+color sidebar_new color221 color233
+bind index,pager <down>  sidebar-next
+bind index,pager <up>    sidebar-prev
+bind index,pager <right> sidebar-open
+
+# Status Bar -----------------------------------------
+#set status_chars  = " *%A"
+#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Index View Options ---------------------------------
+set date_format = "%m/%d  %H:%M"
+set index_format = "[%Z]  %D  %-25.20F  %s"
+
+# Mailboxes to show in the sidebar.
+mailboxes Mail/sww@eight45.net/INBOX \
+          Mail/sww@eight45.net/Sent \
+          Mail/sww@eight45.net/Drafts
+
+# Mailbox hotkeys.
+macro index gi "<change-folder> =sww@eight45.net/INBOX<enter>" "Go to Inbox"
+macro index gd "<change-folder> =sww@eight45.net/Drafts<enter>" "Go to Drafts"
+macro index gs "<change-folder> =sww@eight45.net/Sent<enter>" "Go to Sent"
+
+# Check for new mail every 10 seconds.
+set mail_check = 10
+
+set fast_reply
+set smtp_url
+set sendmail_wait = 0 # wait for sending to successfully finish, because email is important
+
+#set sendmail = "/usr/bin/msmtp --passwordeval='pwsafe -p msmtp -f ~/.pwsafe -E -q'"
+
+set editor="vim"
+
+alternative_order text/plain text/html
+auto_view text/html
+
+# unbind problematic keys
+bind index,pager \# noop
+bind index i        noop
+bind index w        noop
+
+# basic bindings
+bind pager i        exit
+bind pager /        search
+bind pager k        previous-line
+bind pager j        next-line
+bind pager gg       top
+bind pager G        bottom
+bind index,pager R  group-reply
+bind index <tab>    sync-mailbox
+bind index k        previous-entry
+bind index j        next-entry
+bind index gg       first-entry
+bind index G        last-entry
+bind index \Cp      recall-message
+bind index <space>  collapse-thread
+
+macro index U       "l ~U | ~F<enter>"
+
+# mailbox bindings
+macro index gi "<change-folder> =sww@eight45.net/INBOX<enter>" "Go to Inbox"
+macro index gs "<change-folder> =sww@eight45.net/Sent<enter>" "Go to Sent"
+
+# force inbox sync
+macro index sI "<shell-escape>/usr/bin/offlineimap<enter>" "Sync Inbox (full)"
+macro index si "<shell-escape>/usr/bin/offlineimap -qf INBOX<enter>" "Sync Inbox (quick)"
+
+# notmuch
+macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
+
+# sync inbox
+
+# looks
+set markers=no
+set pager_index_lines=15
+set sort='threads'
+set sort_aux='reverse-last-date-received'
+
+# badwolf colour scheme.
+source ~/.mutt/badwolf.muttrc
+
+## zenburn colour scheme.
+#source ~/.mutt/zenburn.muttrc
+
+## molokai colour scheme.
+#source ~/.mutt/molokai.muttrc
+
+## solarized colour scheme.
+#source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+
+# urlview
+#macro pager \cb <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+macro pager \cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+#macro pager \cb <pipe-entry>'w3m'<enter> 'Follow links in w3m'
+
+alias gmail Stephen Whitmore <stephen.whitmore@gmail.com>
+
+#set query_command="$HOME/bin/mutt_ldap_search.pl %s"

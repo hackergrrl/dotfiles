@@ -1,0 +1,14 @@
+[user]
+	name = Stephen Whitmore
+	email = sww@eight45.net
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+	st = status
+	di = diff
+	co = checkout
+	ci = commit
+	br = branch
+
