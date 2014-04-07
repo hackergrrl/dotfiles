@@ -1,0 +1,13 @@
+#!/bin/bash
+
+EMAIL=FILL-ME-IN
+INBOX=~/Mail/${EMAIL}/INBOX
+
+UNREAD=$(ls -1 ${INBOX}/new | wc -l)
+if (( UNREAD == 0 ))
+then
+  echo '^fg(#888888)| ^fg(#666666)^i(/usr/local/google/home/sww/.dzen_icons/xbm/mail.xbm)'
+else
+  echo "^fg(#888888)| ^fg(#ebac54)^i(/usr/local/google/home/sww/.dzen_icons/xbm/mail.xbm)^fg(#33EE33) $UNREAD"
+fi
+#echo -n $UNREAD
