@@ -46,9 +46,6 @@ export EDITOR="vim"
 export BROWSER="google-chrome"
 export TERM="xterm-256color"
 
-# Babel aliases.
-source /google/src/head/depot/google3/chat/scripts/babel.aliases
-
 source $ZSH/oh-my-zsh.sh
 
 # autocorrect is the worst
