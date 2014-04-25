@@ -1,0 +1,23 @@
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+[keybindings]
+[profiles]
+  [[default]]
+    palette = "#000000:#f92672:#6cc72c:#fe9720:#5f91ef:#9358fe:#36af90:#b9b9b9:#4c4c4c:#ff80f4:#a7e22e:#ffee99:#5fd9ef:#ae82fe:#66efd5:#f7f7f7"
+    background_darkness = 0.93
+    background_type = transparent
+    use_system_font = False
+    cursor_color = "#2fa0ee"
+    foreground_color = "#ffffff"
+    show_titlebar = False
+    font = Ubuntu Mono derivative Powerline 12
+    cursor_blink = False
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
