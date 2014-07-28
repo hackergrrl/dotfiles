@@ -19,6 +19,8 @@ filetype plugin on
 
 let mapleader = "-"
 
+set colorcolumn=100
+
 " Perform spell checking when composing mail or markdown.
 autocmd FileType mail set spell
 autocmd FileType mail set textwidth=0
@@ -159,6 +161,19 @@ let g:EclimLoggingDisabled = 1
 
 " Show error panel
 nnoremap <Leader>e :lopen<CR>
+
+" Speed up CtrlP indexing (assumes 'ag' command present).
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .class
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ --ignore .git5_specs
+      \ --ignore review
+      \ -g ""'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " Highlight characters that go over the line length limit.
 " nnoremap <leader>h :call ToggleOverLengthHighlight()<CR>
