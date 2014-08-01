@@ -15,6 +15,7 @@ set undofile
 set bs=2
 set nofoldenable
 set nojoinspaces
+set autowrite
 filetype plugin on
 
 let mapleader = "-"
@@ -148,7 +149,7 @@ let g:ctrlp_custom_ignore = 'magicjar'
 
 " Toggle paste mode.
 " TODO: Leader key chord to enter paste mode, paste system clipboard, then exit
-"       paste mode.
+"       paste mode. (e.g. <Leader>P)
 nnoremap <Leader>p :set paste!<CR>
 
 " Splits
