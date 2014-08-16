@@ -142,11 +142,6 @@ let g:ycm_filetype_blacklist = {
       \}
 let g:ycm_server_idle_suicide_seconds = 0
 
-" HACK: increase CtrlP max files (magicjaaaaaar!)
-let g:ctrlp_max_files = 30000
-" Ignore Java class files.
-let g:ctrlp_custom_ignore = 'magicjar'
-
 " Toggle paste mode.
 " TODO: Leader key chord to enter paste mode, paste system clipboard, then exit
 "       paste mode. (e.g. <Leader>P)
