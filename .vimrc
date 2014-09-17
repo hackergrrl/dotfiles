@@ -24,8 +24,12 @@ set colorcolumn=100
 
 " Perform spell checking when composing mail or markdown.
 autocmd FileType mail set spell
-autocmd FileType mail set textwidth=0
+autocmd FileType mail set textwidth=72
 autocmd FileType markdown set spell
+
+" Major/minor Underlining in markdown.
+autocmd FileType markdown nnoremap <Leader>u yypVr-j
+autocmd FileType markdown nnoremap <Leader>U yypVr=j
 
 " Hide GUI components in gvim.
 set guioptions-=r
@@ -68,6 +72,9 @@ nnoremap ; :
 nnoremap <Leader>p :set paste!<CR>
 nnoremap <Leader>n :set nu!<CR>
 nnoremap <Leader>l :noh<CR>
+
+" Paste system clipboard (/w automatic toggle)
+nnoremap <Leader>P :set paste!<CR>"+P:set paste!<CR>
 
 " Use Javascript syntax highlighting for JSON.
 autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -171,6 +178,16 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ -g ""'
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
+" easymotion
+map  / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
+map <Leader><Leader>l <Plug>(easymotion-lineforward)
+map <Leader><Leader>j <Plug>(easymotion-j)
+map <Leader><Leader>k <Plug>(easymotion-k)
+map <Leader><Leader>h <Plug>(easymotion-linebackward)
+let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
+let g:Easymotion_smartcase = 1
+
 " Highlight characters that go over the line length limit.
 " nnoremap <leader>h :call ToggleOverLengthHighlight()<CR>
 " let g:overlength_enabled = 0
@@ -187,3 +204,9 @@ let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 "         echo 'OverLength highlighting turned off'
 "     endif
 " endfunction
+
+" ultisnips
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
