@@ -118,7 +118,13 @@ au InsertLeave * match ExtraWhiteSpace /\s\+$/
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Preferred default colour scheme.
-colorscheme badwolf
+if has('gui_running')
+  set guioptions-=T  " no toolbar
+  colorscheme solarized
+  set background=dark
+else
+  colorscheme badwolf
+endif
 "colorscheme molokai
 "set background=dark
 "let g:solarized_termcolors=256
