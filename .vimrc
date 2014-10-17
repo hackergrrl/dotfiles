@@ -24,7 +24,7 @@ let maplocalleader = "_"
 
 " Force myself to use 'jk' instead of <esc>
 inoremap jk <esc>
-inoremap <esc> ====NOPE! LEARN HOW TO USE jk!====
+inoremap <esc> <nop>
 
 " Perform spell checking when composing mail or markdown.
 augroup spell_check
@@ -124,13 +124,19 @@ augroup END
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Preferred default colour scheme.
-colorscheme cake16
-"colorscheme badwolf
+colorscheme badwolf
+" colorscheme cake16
 "colorscheme distinguished
 "colorscheme molokai
 "set background=dark
 "let g:solarized_termcolors=256
 "colorscheme solarized
+
+" Use a light theme for markdown editting.
+augroup light_markdown_theme
+  au!
+  au FileType markdown colorscheme cake16
+augroup END
 
 " Buffer navigation shortcuts
 nnoremap <C-k> :bprev<CR>
