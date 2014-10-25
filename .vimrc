@@ -2,7 +2,8 @@
 set nocompatible
 syntax on
 set laststatus=2
-set ai
+set autoindent
+set autowrite
 set nu
 set tabstop=2
 set shiftwidth=2
@@ -25,6 +26,12 @@ let maplocalleader = "_"
 " Force myself to use 'jk' instead of <esc>
 inoremap jk <esc>
 inoremap <esc> <nop>
+
+" Arduino
+" augroup arduino_ft
+"   au!
+"   autocmd BufNewFile,BufRead *.ino ft=arduino
+" augroup END
 
 " Perform spell checking when composing mail or markdown.
 augroup spell_check
