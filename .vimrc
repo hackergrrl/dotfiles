@@ -139,10 +139,14 @@ colorscheme badwolf
 "let g:solarized_termcolors=256
 "colorscheme solarized
 
-" Use a light theme for markdown editting.
+" Use a light theme for markdown editting (in gvim)
 augroup light_markdown_theme
   au!
-  au FileType markdown colorscheme cake16
+  if has('gui_running')
+    au FileType markdown colorscheme cake16
+  else
+    au FileType markdown colorscheme badwolf
+  endif
 augroup END
 
 " Buffer navigation shortcuts
