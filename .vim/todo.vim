@@ -76,4 +76,18 @@ hi def infoItem2 ctermfg=blue guifg=blue
 
 let b:current_syntax = "todo"
 
+function! SwapStar()
+  execute "normal! 0wl"
+  if getline(".")[col(".")-1] == "*"
+    execute "normal! r "
+  elseif getline(".")[col(".")-1] == " "
+    execute "normal! r*"
+  endif
+  execute "normal! 0j"
+endfunction
+
+" autocmd FileType todo-lang nnoremap <CR> :call SwapStar()<CR>
+" TODO: make this buffer local(??)
+nnoremap <buffer> <CR> :call SwapStar()<CR>
+
 "EOF"
