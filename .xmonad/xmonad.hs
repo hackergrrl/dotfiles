@@ -8,7 +8,7 @@ import qualified Data.Map as M
 
 
 -- Terminal
-myTerminal = "urxvt"
+myTerminal = "terminator"
 
 -- Mod mask
 myModMask = mod4Mask
