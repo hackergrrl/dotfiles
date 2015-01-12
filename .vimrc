@@ -19,6 +19,9 @@ set nojoinspaces
 filetype plugin on
 set colorcolumn=100
 
+" 100ms delay (or: let's me hit O and not need to wait around)
+set ttimeoutlen=100
+
 let mapleader = "-"
 let maplocalleader = "_"
 
@@ -44,8 +47,10 @@ augroup END
 " Markdown.
 augroup markdown
   au!
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
   autocmd FileType markdown nnoremap <LocalLeader>u yypVr-j
   autocmd FileType markdown nnoremap <LocalLeader>U yypVr=j
+  autocmd FileType markdown setlocal textwidth=80
 augroup END
 
 " Hide GUI components in gvim.
@@ -65,6 +70,7 @@ nnoremap <Leader>sv :source $MYVIMRC<CR>
 " Formatting magicks.
 "   Thanks Tiziano Santoro!
 "   src: https://groups.google.com/a/google.com/d/msg/vi-users/MUfs7ZZuzeM/SPGCIwSrnYMJ
+" (Removes comment leaders when joining lines)
 set formatoptions+=j
 
 " Pathogen
@@ -85,7 +91,8 @@ nnoremap <Leader>n :set nu!<CR>
 nnoremap <Leader>l :noh<CR>
 
 " Paste system clipboard (/w automatic toggle)
-nnoremap <Leader>P :set paste!<CR>"+P:set paste!<CR>
+" TODO(sww): doesn't seem to work?
+" nnoremap <Leader>P :set paste!<CR>"+P:set paste!<CR>
 
 " Use Javascript syntax highlighting for JSON.
 augroup javascript
@@ -157,6 +164,9 @@ nnoremap <Leader>d :bdel<CR>
 " Sudo to write
 " (Thank you, sjl!)
 cnoremap w!! w !sudo tee % >/dev/null
+
+" Match filename over path
+let g:ctrlp_by_filename = 1
 
 " Easier splits
 nnoremap <C-w>\| :vsplit<CR>
