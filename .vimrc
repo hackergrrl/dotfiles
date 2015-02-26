@@ -14,10 +14,10 @@ set encoding=utf-8
 set undofile
 "set relativenumber   " cool, but slows down the terminal too much =(
 set bs=2
-set nofoldenable
 set nojoinspaces
 filetype plugin on
 set colorcolumn=100
+set cursorline
 
 " 100ms delay (or: let's me hit O and not need to wait around)
 set ttimeoutlen=100
@@ -25,6 +25,9 @@ set ttimeoutlen=100
 let mapleader = "-"
 let maplocalleader = "_"
 
+" Folds
+set foldmethod=marker
+set foldlevelstart=0
 
 " Force myself to use 'jk' instead of <esc>
 inoremap jk <esc>
@@ -57,6 +60,8 @@ augroup END
 set guioptions-=r
 set guioptions-=m
 set guioptions-=T
+set guioptions-=L
+set guioptions-=B
 
 " Airline setup
 " (https://github.com/bling/vim-airline)
@@ -65,6 +70,7 @@ let g:airline_powerline_fonts = 1
 
 " vimrc management
 nnoremap <Leader>ev :e $MYVIMRC<CR>
+nnoremap <Leader>evg :e ${MYVIMRC}_google<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " Formatting magicks.
@@ -171,19 +177,16 @@ let g:ctrlp_by_filename = 1
 " Easier splits
 nnoremap <C-w>\| :vsplit<CR>
 nnoremap <C-w>- :split<CR>
-" easymotion
-map  / <Plug>(easymotion-sn)
-" omap / <Plug>(easymotion-tn)
-map <Leader><Leader>l <Plug>(easymotion-lineforward)
-map <Leader><Leader>j <Plug>(easymotion-j)
-map <Leader><Leader>k <Plug>(easymotion-k)
-map <Leader><Leader>h <Plug>(easymotion-linebackward)
-let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
-let g:Easymotion_smartcase = 1
 
 " ultisnips
 let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
+
+" org mode
+let g:org_heading_shade_leading_stars = 1
+
+" Source Google goodies.
+source ~/.vimrc_google
 
