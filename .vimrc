@@ -184,9 +184,3 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
 
-" org mode
-let g:org_heading_shade_leading_stars = 1
-
-" Source Google goodies.
-source ~/.vimrc_google
-
