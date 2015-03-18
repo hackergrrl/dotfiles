@@ -33,6 +33,9 @@ set foldlevelstart=0
 inoremap jk <esc>
 inoremap <esc> <nop>
 
+" Fixes Y
+nnoremap Y y$
+
 " Arduino
 " augroup arduino_ft
 "   au!
