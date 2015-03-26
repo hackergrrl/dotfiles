@@ -116,7 +116,7 @@ bind pager G        bottom
 bind pager R  group-reply
 
 # URL viewing
-macro pager \cb <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+macro pager \cu <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
 
 # }}}
 

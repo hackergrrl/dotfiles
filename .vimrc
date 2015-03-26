@@ -4,9 +4,13 @@ syntax on
 set laststatus=2
 set autoindent
 set autowrite
+set autoread
 set nu
 set tabstop=2
 set shiftwidth=2
+set shiftround
+set ttyfast
+set lazyredraw
 set expandtab
 set hlsearch
 set incsearch
