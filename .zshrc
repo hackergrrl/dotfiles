@@ -1,3 +1,6 @@
+# TODO(sww): add vim folds + orgaanize into sections
+
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -6,6 +9,8 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="gentoo"
+
+export GOPATH=$HOME/go
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -55,4 +60,21 @@ unsetopt correct
 export LESS=-XRF
 
 # Customize to your needs...
-export PATH=$PATH:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin:$GOPATH/bin
+
+# Handy little aliases
+alias sz='source ~/.zshrc'
+alias eg='vim ~/.gitconfig'
+alias ez='vim ~/.zshrc'
+alias ev='vim ~/.vimrc'
+alias em='vim ~/.muttrc'
+alias et='vim ~/.tmux.conf'
+alias eo='vim ~/.config/openbox/rc.xml'
+alias oconf='openbox --reconfigure'
+
+# git goodies
+# edit files that need to be merged
+alias geu='git diff --name-status --diff-filter=U | cut -f 2 | parallel -Xj1 --tty vim'
+alias gap='git add -p'
+alias gst='git status'
+alias gcm='git commit -m'
