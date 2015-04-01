@@ -175,6 +175,10 @@ nnoremap <C-k> :bprev<CR>
 nnoremap <C-j> :bnext<CR>
 nnoremap <Leader>d :bdel<CR>
 
+" Better history scrolling
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 " Sudo to write
 " (Thank you, sjl!)
 cnoremap w!! w !sudo tee % >/dev/null
