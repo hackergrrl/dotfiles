@@ -3,6 +3,8 @@
 (setq org-agenda-files (list "~/todo.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 
+(global-auto-revert-mode t)
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome-stable")
 
