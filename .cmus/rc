@@ -1,0 +1,5 @@
+unbind common [
+unbind common ]
+bind common ] win-page-down
+bind common [ win-page-up
+
