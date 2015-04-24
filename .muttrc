@@ -92,6 +92,7 @@ bind index gg       first-entry
 bind index G        last-entry
 bind index \Cp      recall-message
 bind index <space>  collapse-thread
+bind index \Cn      read-thread
 
 macro index U       "l ~U<enter>"
 macro index T       "l ~U | ~F<enter>"
