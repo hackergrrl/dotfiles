@@ -27,6 +27,8 @@
 
      (define-key org-todo-state-map "x"
        #'(lambda nil (interactive) (org-todo "CANCELLED")))
+     (define-key org-todo-state-map "t"
+       #'(lambda nil (interactive) (org-todo "TODO")))
      (define-key org-todo-state-map "d"
        #'(lambda nil (interactive) (org-todo "DONE")))
      (define-key org-todo-state-map "f"
