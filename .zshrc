@@ -60,7 +60,7 @@ unsetopt correct
 export LESS=-XRF
 
 # Customize to your needs...
-export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin:$GOPATH/bin
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin:$GOPATH/bin:$HOME/npm/bin
 
 # Handy little aliases
 alias sz='source ~/.zshrc'
