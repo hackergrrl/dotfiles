@@ -9,7 +9,6 @@ unset mark_old  # Read/unread is good enough
 set mail_check = 10
 
 set fast_reply
-set smtp_url
 
 # Wait for sending to finish
 set sendmail_wait = 0

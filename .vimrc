@@ -99,6 +99,7 @@ set noswapfile
 
 " Handy key mappings.
 nnoremap ; :
+nnoremap ;; ;
 nnoremap <Leader>p :set paste!<CR>
 nnoremap <Leader>n :set nu!<CR>
 nnoremap <Leader>l :noh<CR>
@@ -191,3 +192,5 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
 
+nnoremap qq gqip
+nnoremap <cr> o<esc>
