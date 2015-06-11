@@ -36,14 +36,26 @@
  '(org-agenda-files (quote ("~/todo.org")))
  '(org-default-notes-file "~/notes.org")
  '(org-agenda-ndays 1))
+
 (eval-after-load 'org-agenda
   '(progn
      (define-key org-agenda-mode-map (kbd "s-<tab>") 'show-todo-org)
      (define-key org-agenda-mode-map (kbd "<return>") 'org-agenda-goto)
      (defun mark-done-in-agenda () (interactive) (org-agenda-todo "DONE"))
-     (define-key org-agenda-mode-map (kbd "d") 'mark-done-in-agenda)))
+     (defun mark-waiting-in-agenda () (interactive) (org-agenda-todo "WAITING"))
+     (define-key org-agenda-mode-map (kbd "W") 'mark-waiting-in-agenda)
+     (define-key org-agenda-mode-map (kbd "x") 'mark-done-in-agenda)))
+
 (eval-after-load "org"
   '(progn
+     ;; Refresh agenda on save
+     (add-hook 'after-save-hook
+	       (lambda ()
+		 (if (member major-mode (list 'org-mode))
+		     (progn
+		       (org-agenda-list)
+		       (other-window 1)))))
+
      ;; Handy shortcuts for moving around.
      (define-key org-mode-map (kbd "s-<tab>") 'org-agenda-list)
      (defun show-todo-org ()
