@@ -35,7 +35,7 @@
 (custom-set-variables
  '(org-agenda-files (quote ("~/todo.org")))
  '(org-default-notes-file "~/notes.org")
- '(org-agenda-ndays 1))
+ '(org-deadline-warning-days 7))
 
 (eval-after-load 'org-agenda
   '(progn
