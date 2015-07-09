@@ -23,6 +23,9 @@ filetype plugin on
 set colorcolumn=100
 set cursorline
 
+set rtp+=~/.fzf
+nnoremap <C-p> :FZF<CR>
+
 " 100ms delay (or: let's me hit O and not need to wait around)
 set ttimeoutlen=100
 
