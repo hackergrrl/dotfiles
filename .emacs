@@ -49,12 +49,12 @@
 (eval-after-load "org"
   '(progn
      ;; Refresh agenda on save
-     (add-hook 'after-save-hook
-	       (lambda ()
-		 (if (member major-mode (list 'org-mode))
-		     (progn
-		       (org-agenda-list)
-		       (other-window 1)))))
+;     (add-hook 'after-save-hook
+;	       (lambda ()
+;		 (if (member major-mode (list 'org-mode))
+;		     (progn
+;		       (org-agenda-list)
+;		       (other-window 1)))))
 
      ;; Handy shortcuts for moving around.
      (define-key org-mode-map (kbd "s-<tab>") 'org-agenda-list)
