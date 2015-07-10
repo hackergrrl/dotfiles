@@ -77,6 +77,7 @@ set guioptions-=B
 " (https://github.com/bling/vim-airline)
 set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
 let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
 
 " vimrc management
 nnoremap <Leader>ev :e $MYVIMRC<CR>
@@ -201,3 +202,15 @@ nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
 
 nnoremap qq gqip
 nnoremap <cr> o<esc>
+
+" vim-buffabline config
+let g:buftabline_separators=1
+let g:buftabline_numbers=0
+" blue-ish
+" hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=39 ctermfg=15
+" hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=25 ctermfg=15
+" hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=17 ctermfg=15
+" goes with 'dark' airline theme
+hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=190 ctermfg=17
+hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=238 ctermfg=15
+hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=234 ctermfg=15
