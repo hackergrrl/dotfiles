@@ -55,6 +55,15 @@ augroup spell_check
   autocmd FileType mail setlocal spell
   autocmd FileType mail setlocal textwidth=72
   autocmd FileType markdown setlocal spell
+
+  " Ignore URLs
+  autocmd FileType markdown syn match UrlNoSpell "\w\+:\/\/[^[:space:]]\+" contains=@NoSpell
+  autocmd FileType mail syn match UrlNoSpell "\w\+:\/\/[^[:space:]]\+" contains=@NoSpell
+augroup END
+
+" vim-task
+augroup tasks
+  autocmd FileType task nnoremap <silent> <buffer> <cr> :call Toggle_task_status()<CR><CR>
 augroup END
 
 " Markdown.
@@ -156,7 +165,8 @@ augroup END
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Preferred default colour scheme.
-colorscheme badwolf
+colorscheme atom-dark-256
+" colorscheme badwolf
 " colorscheme cake16
 "colorscheme distinguished
 "colorscheme molokai

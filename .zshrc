@@ -1,6 +1,5 @@
 # TODO(sww): add vim folds + orgaanize into sections
 
-
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -8,7 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="gentoo"
+ZSH_THEME="kphoen"
 
 export GOPATH=$HOME/go
 
@@ -48,7 +47,7 @@ export GOPATH=$HOME/go
 plugins=(git)
 
 export EDITOR="vim"
-export BROWSER="google-chrome"
+export BROWSER="google-chrome-stable"
 export TERM="xterm-256color"
 
 source $ZSH/oh-my-zsh.sh
@@ -60,7 +59,7 @@ unsetopt correct
 export LESS=-XRF
 
 # Customize to your needs...
-export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin:$GOPATH/bin:$HOME/npm/bin
+export PATH=$HOME/npm/bin:$HOME/lib/iojs-v2.2.1-linux-x64/bin:$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin:$GOPATH/bin
 
 # Handy little aliases
 alias sz='source ~/.zshrc'
@@ -81,3 +80,8 @@ alias gdi='git diff'
 alias gcm='git commit -m'
 alias gcop='git checkout -p'
 alias gau='git ls-files --others --exclude-standard | xargs git add'
+
+# Plan 9
+export PLAN9=/usr/local/plan9
+export PATH=$PATH:$PLAN9/bin
+

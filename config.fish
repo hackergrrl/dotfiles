@@ -66,7 +66,7 @@ end
 function fish_prompt
     set last_status $status
 
-    z --add "$PWD"
+    # z --add "$PWD"
 
     echo
 
