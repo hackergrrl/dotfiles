@@ -2,15 +2,30 @@
 (setq user-full-name "Stephen Whitmore"
       user-mail-address "stephen.whitmore@gmail.com")
 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+
+;; enable file encryption
+(require 'epa-file)
+(epa-file-enable)
+
 ;; Package management
 (package-initialize)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/") t)
 ;; I'm lazy
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Make META play nicely on X
+(setq x-alt-keysym 'meta)
+
 ;; TODO(sww): does this do what I want it to do?
 (global-auto-revert-mode t)
+
+;; font
+(set-face-attribute 'default nil :font "Ubuntu Mono for Powerline" :height 120)
+(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono for Powerline 12"))
 
 ;; Default browser
 (setq browse-url-browser-function 'browse-url-generic
@@ -30,12 +45,27 @@
 (setq org-agenda-files (list "~/todo.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO" "STARTED" "WAITING" "LGTM" "SUBMIT" "|" "DONE" "CANCELLED")))
+      '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(@/!)" "|" "DONE(d!)" "CANCELLED(@/!)")))
+
+;; org-capture
+(global-set-key (kbd "C-c c") 'org-capture)
+(setq org-capture-templates
+ '(("t" "Todo" entry (file+headline "~/todo.org" "Tasks")
+        "* TODO %?")
+   ("j" "Journal" entry (file+datetree "~/org/journal.org")
+    "* %?\nEntered on %U\n  %i\n  %a")))
 
 (custom-set-variables
- '(org-agenda-files (quote ("~/todo.org")))
- '(org-default-notes-file "~/notes.org")
- '(org-deadline-warning-days 7))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
+ '(org-agenda-files (quote ("~/todo.org")) t)
+ '(org-deadline-warning-days 7)
+ '(org-default-notes-file "~/todo.org"))
 
 (eval-after-load 'org-agenda
   '(progn
