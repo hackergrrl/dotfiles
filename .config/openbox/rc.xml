@@ -128,7 +128,7 @@
     <name>desktop 2</name>
     -->
     </names>
-    <popupTime>875</popupTime>
+    <popupTime>400</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
        desktops.  Set this to 0 to disable the popup. -->
   </desktops>
@@ -153,13 +153,13 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>0</top>
+    <top>16</top>
     <bottom>0</bottom>
     <!-- <left>10</left> -->
     <!-- <right>10</right> -->
     <left>0</left>
     <right>0</right>
-    <top>16</top>
+    <top>32</top>
   </margins>
   <dock>
     <position>TopLeft</position>
@@ -413,7 +413,7 @@
     <keybind key="W-Return">
       <action name="Execute">
         <!-- <execute>urxvt</execute> -->
-        <execute>terminator --geometry 700x500</execute>
+        <execute>termite --geometry 700x500</execute>
       </action>
     </keybind>
     <!-- swhitmor: open dmenu -->
