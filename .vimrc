@@ -73,6 +73,7 @@ augroup markdown
   autocmd FileType markdown nnoremap <LocalLeader>u yypVr-j
   autocmd FileType markdown nnoremap <LocalLeader>U yypVr=j
   autocmd FileType markdown setlocal textwidth=80
+  autocmd FileType markdown nnoremap <Leader>v :w !vmd<CR><CR>
 augroup END
 
 " Hide GUI components in gvim.
@@ -224,3 +225,6 @@ let g:buftabline_numbers=0
 hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=190 ctermfg=17
 hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=238 ctermfg=15
 hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=234 ctermfg=15
+
+
+nnoremap \| :tabnew \| r !
