@@ -39,6 +39,12 @@
 (setq calendar-longitude -121.8863)
 (setq calendar-location-name "San Jose, CA")
 
+;; save backup files to /tmp
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 ;; orgmode
 (setq org-log-done 'time)
 (setq org-startup-indented t)
@@ -46,14 +52,20 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
       '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(@/!)" "|" "DONE(d!)" "CANCELLED(@/!)")))
+(setq org-agenda-start-on-weekday nil)
+
+;; org-pomodoro
+(setq org-pomodoro-keep-killed-pomodoro-time t)
+(define-key org-agenda-mode-map (kbd "C-c C-x C-p") 'org-pomodoro)
+(define-key org-mode-map (kbd "C-c C-x C-p") 'org-pomodoro)
 
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
- '(("t" "Todo" entry (file+headline "~/todo.org" "Tasks")
-        "* TODO %?")
-   ("j" "Journal" entry (file+datetree "~/org/journal.org")
-    "* %?\nEntered on %U\n  %i\n  %a")))
+ '(("t" "Todo" entry (file+headline "~/todo.org" "Tasks") "* TODO %?")
+   ("e" "Expense" plain (file "~/Sync/personal/expenses.csv") "%(org-read-date),%^{Payee},%^{Amount}" :immediate-finish t)
+   ("o" "Today Task" entry (file+headline "~/todo.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %t\n%?" :immediate-finish t)
+   ("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?\nEntered on %U\n  %i\n  %a")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
