@@ -21,7 +21,6 @@ set bs=2
 set nojoinspaces
 filetype plugin on
 set colorcolumn=100
-set cursorline
 
 set rtp+=~/.fzf
 nnoremap <C-p> :FZF<CR>
@@ -36,12 +35,25 @@ let maplocalleader = "_"
 set foldmethod=marker
 set foldlevelstart=0
 
-" Force myself to use 'jk' instead of <esc>
-inoremap jk <esc>
-inoremap <esc> <nop>
+map <tab> %
+
+" Center screen when searching
+nnoremap n nzz
+nnoremap N Nzz
+
+" Have */# highlight matches, but not move the cursor.
+nnoremap * *<C-o>
+nnoremap # #<C-o>
+
+" let's be a little emacs-like insert mode
+inoremap <C-a> <esc>0i
+inoremap <C-e> <esc>$i
 
 " Fixes Y
 nnoremap Y y$
+
+" Open all instances of the current search in a location list.
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Arduino
 " augroup arduino_ft
@@ -212,7 +224,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
 
 nnoremap qq gqip
-nnoremap <cr> o<esc>
+nnoremap <S-CR> o<ESC>
 
 " vim-buffabline config
 let g:buftabline_separators=1
@@ -226,5 +238,5 @@ hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=19
 hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=238 ctermfg=15
 hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=234 ctermfg=15
 
-
-nnoremap \| :tabnew \| r !
+" pipe the output of a command into a new buffer
+nnoremap \| :tabnew \| 0r !
