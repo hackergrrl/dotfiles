@@ -23,6 +23,13 @@
 ;; TODO(sww): does this do what I want it to do?
 (global-auto-revert-mode t)
 
+;; window navigation
+(global-set-key (kbd "C-.") 'other-window)
+(global-set-key (kbd "C-,") 'prev-window)
+(defun prev-window ()
+  (interactive)
+  (other-window -1))
+
 ;; font
 (set-face-attribute 'default nil :font "Ubuntu Mono for Powerline" :height 120)
 (add-to-list 'default-frame-alist '(font .  "Ubuntu Mono for Powerline 12"))
@@ -33,6 +40,19 @@
 
 ;; Easy clipboard pasting
 (global-set-key (kbd "C-x C-p") 'x-clipboard-yank)
+
+;; eval-and-replace
+;; via http://emacsredux.com/blog/2013/06/21/eval-and-replace/
+(defun eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+(global-set-key (kbd "C-c e") 'eval-and-replace)
 
 ;; Where in the world is..
 (setq calendar-latitude 37.3382)
