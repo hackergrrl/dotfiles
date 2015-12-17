@@ -79,10 +79,6 @@
 (setq org-track-ordered-property-with-tag t)
 (setq org-agenda-dim-blocked-tasks t)
 
-;; org-pomodoro
-(setq org-pomodoro-keep-killed-pomodoro-time t)
-(define-key org-mode-map (kbd "C-c C-x C-p") 'org-pomodoro)
-
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
