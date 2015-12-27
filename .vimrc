@@ -1,4 +1,30 @@
-" General goodness.
+" Initialization ----------------------------------------------------------- {{{
+
+" Pathogen
+call pathogen#infect()
+call pathogen#helptags()
+
+" Airline
+" (https://github.com/bling/vim-airline)
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
+
+" Atom is pretty rad.
+colorscheme atom-dark-256
+
+" Use a light theme for markdown editting in gvim.
+augroup light_markdown_theme
+  au!
+  if has('gui_running')
+    au FileType markdown colorscheme cake16
+  else
+    au FileType markdown colorscheme badwolf
+  endif
+augroup END
+
+" }}} 
+" General ------------------------------------------------------------------ {{{
 set nocompatible
 syntax on
 set laststatus=2
@@ -22,18 +48,37 @@ set nojoinspaces
 filetype plugin on
 set colorcolumn=100
 
-set rtp+=~/.fzf
-nnoremap <C-p> :FZF<CR>
-
 " 100ms delay (or: let's me hit O and not need to wait around)
 set ttimeoutlen=100
 
 let mapleader = "-"
 let maplocalleader = "_"
 
-" Folds
-set foldmethod=marker
-set foldlevelstart=0
+" Backups
+set undodir=~/.vim/tmp/undo/
+set backupdir=~/.vim/tmp/backup/
+set directory=~/.vim/tmp/swap/
+set backup
+set noswapfile
+
+" }}}
+" Handy mappings ----------------------------------------------------------- {{{
+
+nnoremap ; :
+nnoremap ;; ;
+nnoremap <Leader>n :set nu!<CR>
+nnoremap <Leader>l :noh<CR>
+
+" TODO: What I'd *really* like is a nice hotkey that pasted my system
+" clipboard nicely.
+nnoremap <Leader>p :set paste!<CR>
+
+" who even uses substitute?
+nnoremap s <esc>:w<cr>
+
+" jk for escape. none of that system-wide capslock crap.
+inoremap jk <esc>
+inoremap <esc> <nop>
 
 map <tab> %
 
@@ -49,17 +94,46 @@ nnoremap # #<C-o>
 inoremap <C-a> <esc>0i
 inoremap <C-e> <esc>$i
 
-" Fixes Y
+" Fixes Y to be like D.
 nnoremap Y y$
 
-" Open all instances of the current search in a location list.
-nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" Format paragraph. I never use register q.
+nnoremap qq gqip
 
-" Arduino
-" augroup arduino_ft
-"   au!
-"   autocmd BufNewFile,BufRead *.ino ft=arduino
-" augroup END
+" Pipe the output of a command into a new buffer.
+nnoremap \| :tabnew \| 0r !
+
+" Write as sudo. (Thanks, Losh!)
+cnoremap w!! w !sudo tee % >/dev/null
+
+nnoremap <CR> o<ESC>k
+
+" Buffer navigation shortcuts.
+nnoremap <C-k> :bprev<CR>
+nnoremap <C-j> :bnext<CR>
+nnoremap <Leader>d :bdel<CR>
+
+" Better history scrolling.
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" Easier splits.
+nnoremap <C-w>\| :vsplit<CR>
+nnoremap <C-w>- :split<CR>
+
+" vimrc management
+nnoremap <Leader>ev :e $MYVIMRC<CR>
+nnoremap <Leader>evg :e ${MYVIMRC}_google<CR>
+nnoremap <Leader>sv :source $MYVIMRC<CR>
+
+" }}}
+" Filetype auto groups ----------------------------------------------------- {{{
+
+" vimscript
+augroup filetype_vim
+  autocmd!
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
 
 " Perform spell checking when composing mail or markdown.
 augroup spell_check
@@ -73,11 +147,6 @@ augroup spell_check
   autocmd FileType mail syn match UrlNoSpell "\w\+:\/\/[^[:space:]]\+" contains=@NoSpell
 augroup END
 
-" vim-task
-augroup tasks
-  autocmd FileType task nnoremap <silent> <buffer> <cr> :call Toggle_task_status()<CR><CR>
-augroup END
-
 " Markdown.
 augroup markdown
   au!
@@ -88,51 +157,10 @@ augroup markdown
   autocmd FileType markdown nnoremap <Leader>v :w !vmd<CR><CR>
 augroup END
 
-" Hide GUI components in gvim.
-set guioptions-=r
-set guioptions-=m
-set guioptions-=T
-set guioptions-=L
-set guioptions-=B
-
-" Airline setup
-" (https://github.com/bling/vim-airline)
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
-let g:airline_powerline_fonts = 1
-let g:airline_theme='dark'
-
-" vimrc management
-nnoremap <Leader>ev :e $MYVIMRC<CR>
-nnoremap <Leader>evg :e ${MYVIMRC}_google<CR>
-nnoremap <Leader>sv :source $MYVIMRC<CR>
-
-" Formatting magicks.
-"   Thanks Tiziano Santoro!
-"   src: https://groups.google.com/a/google.com/d/msg/vi-users/MUfs7ZZuzeM/SPGCIwSrnYMJ
-" (Removes comment leaders when joining lines)
-set formatoptions+=j
-
-" Pathogen
-call pathogen#infect()
-call pathogen#helptags()
-
-" Backups
-set undodir=~/.vim/tmp/undo/
-set backupdir=~/.vim/tmp/backup/
-set directory=~/.vim/tmp/swap/
-set backup
-set noswapfile
-
-" Handy key mappings.
-nnoremap ; :
-nnoremap ;; ;
-nnoremap <Leader>p :set paste!<CR>
-nnoremap <Leader>n :set nu!<CR>
-nnoremap <Leader>l :noh<CR>
-
-" Paste system clipboard (/w automatic toggle)
-" TODO(sww): doesn't seem to work?
-" nnoremap <Leader>P :set paste!<CR>"+P:set paste!<CR>
+" vim-task
+augroup tasks
+  autocmd FileType task nnoremap <silent> <buffer> <cr> :call Toggle_task_status()<CR><CR>
+augroup END
 
 " Use Javascript syntax highlighting for JSON.
 augroup javascript
@@ -140,11 +168,34 @@ augroup javascript
   autocmd BufNewFile,BufRead *.json set ft=javascript
 augroup END
 
-" Syntax highlighting colour preferences.
-hi Comment ctermfg=magenta
-hi Pmenu ctermfg=white ctermbg=darkmagenta
-hi Search ctermbg=green ctermfg=black
-hi LineNr ctermfg=grey cterm=bold
+" }}}
+" Gvim options ------------------------------------------------------------- {{{
+set guioptions-=r
+set guioptions-=m
+set guioptions-=T
+set guioptions-=L
+set guioptions-=B
+" }}}
+" Folds -------------------------------------------------------------------- {{{
+
+set foldmethod=marker
+set foldlevelstart=0
+
+" Space to toggle.
+nnoremap <space> za
+vnoremap <space> za
+
+" Open current fold fully.
+nnoremap z0 zcz0
+
+" 'Focus' the current line. (Thanks, Losh!)
+nnoremap z<space> zMza
+
+" }}}
+" Formatting aides --------------------------------------------------------- {{{
+
+" Removes comment leaders when joining lines.
+set formatoptions+=j
 
 " Highlight trailing whitespace.
 hi link localWhitespaceError Error
@@ -153,14 +204,6 @@ augroup trailing_whitespace
   au Syntax * syn match localWhitespaceError /\(zs\%#|\s\)\+$/ display
   au Syntax * syn match localWhitespaceError / \+\ze\t/ display
   au Syntax * syn match localWhitespaceError /\%>100v.\+/ display
-augroup END
-
-" Todo list highlighting.
-" TODO: the todo.vim plugin should do this detection, not my vimrc
-augroup todo_lang
-  au!
-  au BufRead,BufNewFile *.todo set filetype=todo-lang
-  au Syntax todo-lang source $HOME/.vim/todo.vim
 augroup END
 
 " Highlight trailing whitespace.
@@ -177,66 +220,18 @@ augroup END
 " Highlight VCS conflict markers.
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-" Preferred default colour scheme.
-colorscheme atom-dark-256
-" colorscheme badwolf
-" colorscheme cake16
-"colorscheme distinguished
-"colorscheme molokai
-"set background=dark
-"let g:solarized_termcolors=256
-"colorscheme solarized
+" }}}
+" Plugin configuration ----------------------------------------------------- {{{
 
-" Use a light theme for markdown editting (in gvim)
-augroup light_markdown_theme
-  au!
-  if has('gui_running')
-    au FileType markdown colorscheme cake16
-  else
-    au FileType markdown colorscheme badwolf
-  endif
-augroup END
-
-" Buffer navigation shortcuts
-nnoremap <C-k> :bprev<CR>
-nnoremap <C-j> :bnext<CR>
-nnoremap <Leader>d :bdel<CR>
-
-" Better history scrolling
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-
-" Sudo to write
-" (Thank you, sjl!)
-cnoremap w!! w !sudo tee % >/dev/null
-
-" Match filename over path
-let g:ctrlp_by_filename = 1
-
-" Easier splits
-nnoremap <C-w>\| :vsplit<CR>
-nnoremap <C-w>- :split<CR>
-
-" ultisnips
-let g:UltiSnipsExpandTrigger="<c-l>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-nnoremap <silent> <Leader>ue :UltiSnipsEdit<CR>
-
-nnoremap qq gqip
-nnoremap <S-CR> o<ESC>
-
-" vim-buffabline config
+" vim-buffabline
 let g:buftabline_separators=1
 let g:buftabline_numbers=0
-" blue-ish
-" hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=39 ctermfg=15
-" hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=25 ctermfg=15
-" hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=17 ctermfg=15
-" goes with 'dark' airline theme
 hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=190 ctermfg=17
 hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=238 ctermfg=15
 hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=234 ctermfg=15
 
-" pipe the output of a command into a new buffer
-nnoremap \| :tabnew \| 0r !
+" FZF
+set rtp+=~/.fzf
+nnoremap <C-p> :FZF<CR>
+
+" }}}
