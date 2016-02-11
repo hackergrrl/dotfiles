@@ -188,14 +188,14 @@ set foldmethod=marker
 set foldlevelstart=0
 
 " Space to toggle.
-nnoremap <space> za
-vnoremap <space> za
+nnoremap <space> zA
+vnoremap <space> zA
 
 " Open current fold fully.
 nnoremap z0 zcz0
 
 " 'Focus' the current line. (Thanks, Losh!)
-nnoremap z<space> zMza
+nnoremap z<space> zMzA
 
 " }}}
 " Formatting aides --------------------------------------------------------- {{{
