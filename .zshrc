@@ -78,7 +78,7 @@ alias gap='git add -p'
 alias gst='git status'
 alias gdi='git diff'
 alias gcm='git commit -m'
-alias gcop='git checkout -p'
+alias gcp='git checkout -p'
 alias gau='git ls-files --others --exclude-standard | xargs git add'
 
 # Plan 9
