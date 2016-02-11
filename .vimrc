@@ -168,6 +168,12 @@ augroup javascript
   autocmd BufNewFile,BufRead *.json set ft=javascript
 augroup END
 
+augroup golang
+  au!
+  autocmd FileType go nnoremap <C-]> :GoDef<CR>
+  autocmd FileType go nnoremap <C-}> :GoDoc<CR>
+augroup END
+
 " }}}
 " Gvim options ------------------------------------------------------------- {{{
 set guioptions-=r
