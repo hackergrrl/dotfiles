@@ -1,89 +1,113 @@
-
-# Basic settings {{{
-
+# Basics {{{
 set realname="Stephen Whitmore"
-
-unset mark_old  # Read/unread is good enough
-
-# Check for new mail every 10 seconds.
-set mail_check = 10
-
-set fast_reply
-
-# Wait for sending to finish
-set sendmail_wait = 0
+set from=stephen.whitmore@gmail.com
 
 set editor="vim"
 
-alternative_order text/plain text/html
-auto_view text/html
+set charset = "UTF-8"
+set locale = "en_US.UTF-8"
+set ascii_chars
 
+# Ask before quitting, but default to yes
+set quit=ask-yes
 # }}}
 
 # PGP {{{
-# TODO: put this into its own .mutt/gpg.rc file and source it
-# set pgp_use_gpg_agent = yes
-# set pgp_sign_as = E2701508
-# set pgp_timeout = 3600
-# set crypt_autosign = yes
-# set crypt_replyencrypt = yes
-# send-hook "~f foo@bar.com"  set pgp_sign_as=MYFINGERPRINT
-# bind compose p pgp-menu
-# macro compose P pf "send mail without GPG"
+source ~/.mutt/gpg2.rc
+source ~/.mutt/gpg.rc
 # }}}
 
-# General paths {{{
+# Mailbox config {{{
 set mbox_type=Maildir
 set folder=$HOME/Mail
+set spoolfile=$HOME/Mail/GMail/INBOX
+# }}}
+
+# Various {{{
 set header_cache="~/.mutt/cache/headers"
 set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file=~/.mutt/certificates
 set mailcap_path=~/.mutt/mailcap
+set record = "~/Mail/GMail/Sent"
+set postponed = "~/Mail/GMail/Drafts"
+
+unset mark_old  # Read/unread is good enough, thanks
+# }}}
+
+# Folder hooks {{{
+## collapse all threads
+folder-hook * "exec collapse-all"
+
+## show only unread by default
+folder-hook * push "<limit>~U<enter>"
 # }}}
 
 # Sidebar {{{
-# set sidebar_delim = ' |'
-# set sidebar_visible = yes
-# set sidebar_width = 20
-# set sidebar_width = 1
-#set status_chars  = " *%A"
-#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
-# color sidebar_new color221 color233
-# bind index,pager <down>  sidebar-next
-# bind index,pager <up>    sidebar-prev
-# bind index,pager <right> sidebar-open
+set sidebar_delim = ' | '
+set sidebar_visible = yes
+set sidebar_width = 35
+color sidebar_new brightyellow default
+bind index,pager <down>   sidebar-next
+bind index,pager <up>   sidebar-prev
+bind index,pager <right>   sidebar-open
 # }}}
 
-# Index view options {{{
+# Index {{{
 set date_format = "%m/%d  %H:%M"
-set index_format = "{%2N} [%Z]  %D  %-25.20F  %s"
-# }}}
-
-# Custom scoring {{{
-# Unread > Flagged > Read
-score "~U" 2
-score "~F" 1
+set index_format = "[%Z]  %D  %-25.20F  %s"
 # }}}
 
 # Mailboxes {{{
-#mailboxes Mail/sww@???.com/INBOX \
-#          Mail/sww@???.com/Sent \
-#          Mail/sww@???.com/Drafts
+mailboxes =GMail/INBOX \
+          =IPFS/INBOX \
+          =GMail/SudoRoom \
+          =GMail/NodeSchool \
+          =GMail/Sent \
+          =GMail/Drafts \
+          =eight45/INBOX \
+          =eight45/Sent
+
+## hotkeys
+macro index gi "<change-folder> =GMail/INBOX<enter>" "Go to Inbox"
+macro index gd "<change-folder> =GMail/Drafts<enter>" "Go to Drafts"
+macro index gs "<change-folder> =GMail/Sent<enter>" "Go to Sent"
+
+macro index sm ":set sendmail="/usr/bin/msmtp"<enter>" "Send mail with SMTP"
+
+macro index U "l ~U<enter>"
+macro index A "l all<enter>"
+#}}}
+
+# Sending mail {{{
+set fast_reply
+set sendmail_wait = 0 # wait for sending to successfully finish, because email is important
+
+set sendmail = "/usr/bin/msmtp"
 # }}}
 
-# Index bindings {{{
+# Viewing mail {{{
+alternative_order text/plain text/html
+auto_view text/html
+}}}
 
-# Favourite mailboxes
-# macro index gi "<change-folder> =sww@???.com/INBOX<enter>" "Go to Inbox"
-# macro index gd "<change-folder> =sww@???.com/Drafts<enter>" "Go to Drafts"
-# macro index gs "<change-folder> =sww@???.com/Sent<enter>" "Go to Sent"
+# Key bindings {{{
 
-# Unbind problematic keys
+# unbind problematic keys
 bind index,pager \# noop
 bind index i        noop
 bind index w        noop
+bind index p        noop
 
-bind index R        group-reply
+# basic bindings
+bind pager i        exit
+bind pager /        search
+bind pager k        previous-line
+bind pager j        next-line
+bind pager gg       top
+bind pager G        bottom
+bind pager J        next-entry
+bind pager K        previous-entry
+bind index,pager R  group-reply
 bind index <tab>    sync-mailbox
 bind index k        previous-entry
 bind index j        next-entry
@@ -91,33 +115,12 @@ bind index gg       first-entry
 bind index G        last-entry
 bind index \Cp      recall-message
 bind index <space>  collapse-thread
-bind index \Cn      read-thread
-
-macro index U       "l ~U<enter>"
-macro index T       "l ~U | ~F<enter>"
 
 # force inbox sync
-macro index sI "<shell-escape>/usr/bin/offlineimap<enter>" "Sync Inbox (full)"
-macro index si "<shell-escape>/usr/bin/offlineimap -qf INBOX<enter>" "Sync Inbox (quick)"
+macro index si "<shell-escape>/usr/bin/offlineimap -q<enter>" "Sync Inbox"
 
-# notmuch
-macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
-
-# }}}
-
-# Pager bindings {{{
-
-bind pager i        exit
-bind pager /        search
-bind pager k        previous-line
-bind pager j        next-line
-bind pager gg       top
-bind pager G        bottom
-bind pager R  group-reply
-
-# URL viewing
-macro pager \cu <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
-
+# search via notmuch
+macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py<enter><change-folder-readonly>~/.cache/mutt_results<enter>"
 # }}}
 
 # Appearance {{{
@@ -125,12 +128,27 @@ set markers=no
 set pager_index_lines=15
 set sort='threads'
 set sort_aux='reverse-last-date-received'
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set uncollapse_jump
 
-# Highlight messages sent explicitly (or CC'd) to me differently
-#color index color205 color233 "~t sww@???.com ~N"
-#color index color215 color233 "~c sww@???.com ~N"
+# colour scheme de jour
+# source ~/.mutt/numix.muttrc
+source ~/.mutt/vombatidae.mutt
+# source ~/.mutt/sjl.muttrc
+#source ~/.mutt/zenburn.muttrc
+#source ~/.mutt/molokai.muttrc
+#source ~/.mutt/kindly.muttrc
+#source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
 
-source ~/.mutt/badwolf.muttrc
+# Colour messages differently when I'm GitHub-mentioned.
+color index green color234 '~b "@noffle"'
 # }}}
 
-#set query_command="$HOME/bin/mutt_ldap_search.pl %s"
+# URL handling {{{
+macro pager \cu <pipe-entry>'url-menu'<enter> 'Follow links'
+# }}}
+
+# Addressbook {{{
+source ~/.mutt/addressbook
+# }}}
