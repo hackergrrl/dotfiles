@@ -88,7 +88,7 @@ set sendmail = "/usr/bin/msmtp"
 # Viewing mail {{{
 alternative_order text/plain text/html
 auto_view text/html
-}}}
+# }}}
 
 # Key bindings {{{
 
