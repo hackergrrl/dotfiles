@@ -155,6 +155,10 @@ augroup markdown
   autocmd FileType markdown nnoremap <LocalLeader>U yypVr=j
   autocmd FileType markdown setlocal textwidth=80
   autocmd FileType markdown nnoremap <Leader>v :w !vmd<CR><CR>
+  autocmd FileType markdown colorscheme badwolf
+
+  " quickly turn author/repo into a github markdown link
+  autocmd FileType markdown nnoremap <Leader>gh ByWi[<ESC>Ea](https://github.com/<ESC>pi)<ESC>
 augroup END
 
 " vim-task
