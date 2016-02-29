@@ -13,8 +13,8 @@ set quit=ask-yes
 # }}}
 
 # PGP {{{
-source ~/.mutt/gpg2.rc
-source ~/.mutt/gpg.rc
+# source ~/.mutt/gpg2.rc
+# source ~/.mutt/gpg.rc
 # }}}
 
 # Mailbox config {{{
@@ -24,6 +24,7 @@ set spoolfile=$HOME/Mail/GMail/INBOX
 # }}}
 
 # Various {{{
+#
 set header_cache="~/.mutt/cache/headers"
 set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file=~/.mutt/certificates
@@ -35,9 +36,7 @@ unset mark_old  # Read/unread is good enough, thanks
 # }}}
 
 # Folder hooks {{{
-## collapse all threads
-folder-hook * "exec collapse-all"
-
+#
 ## show only unread by default
 folder-hook * push "<limit>~U<enter>"
 # }}}
@@ -60,6 +59,7 @@ set index_format = "[%Z]  %D  %-25.20F  %s"
 # Mailboxes {{{
 mailboxes =GMail/INBOX \
           =IPFS/INBOX \
+          =GMail/Reading\ List \
           =GMail/SudoRoom \
           =GMail/NodeSchool \
           =GMail/Sent \
