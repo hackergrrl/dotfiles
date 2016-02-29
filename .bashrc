@@ -43,6 +43,7 @@ alias ev='vim ~/.vimrc'
 ### edit files that need to be merged
 alias geu='git diff --name-status --diff-filter=U | cut -f 2 | parallel -Xj1 --tty vim'
 
+alias gl='git log'
 alias gap='git add -p'
 alias gst='git status'
 alias gdi='git diff'
