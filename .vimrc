@@ -13,17 +13,7 @@ let g:airline_theme='dark'
 " Atom is pretty rad.
 colorscheme atom-dark-256
 
-" Use a light theme for markdown editting in gvim.
-augroup light_markdown_theme
-  au!
-  if has('gui_running')
-    au FileType markdown colorscheme cake16
-  else
-    au FileType markdown colorscheme badwolf
-  endif
-augroup END
-
-" }}} 
+" }}}
 " General ------------------------------------------------------------------ {{{
 set nocompatible
 syntax on
@@ -138,9 +128,7 @@ augroup END
 " Perform spell checking when composing mail or markdown.
 augroup spell_check
   au!
-  autocmd FileType mail setlocal spell
   autocmd FileType mail setlocal textwidth=72
-  autocmd FileType markdown setlocal spell
 
   " Ignore URLs
   autocmd FileType markdown syn match UrlNoSpell "\w\+:\/\/[^[:space:]]\+" contains=@NoSpell
@@ -175,7 +163,7 @@ augroup END
 augroup golang
   au!
   autocmd FileType go nnoremap <C-]> :GoDef<CR>
-  autocmd FileType go nnoremap <C-}> :GoDoc<CR>
+  autocmd FileType go nnoremap <Leader>[ :GoDoc<CR>
 augroup END
 
 " }}}
