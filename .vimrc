@@ -158,6 +158,7 @@ augroup END
 augroup javascript
   au!
   autocmd BufNewFile,BufRead *.json set ft=javascript
+  nnoremap <Leader>S :!standard %<CR>
 augroup END
 
 augroup golang

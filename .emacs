@@ -36,7 +36,7 @@
 
 ;; Default browser
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "google-chrome-stable")
+      browse-url-generic-program "chromium")
 
 ;; Easy clipboard pasting
 (global-set-key (kbd "C-x C-p") 'x-clipboard-yank)
@@ -95,9 +95,10 @@
  '(custom-safe-themes
    (quote
     ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
- '(org-agenda-files (quote ("~/todo.org")) t)
- '(org-deadline-warning-days 7)
- '(org-default-notes-file "~/todo.org"))
+ '(org-deadline-warning-days 1)
+ '(org-default-notes-file "~/todo.org")
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 
 (eval-after-load 'org-agenda
   '(progn
@@ -146,3 +147,6 @@
 (add-to-list 'load-path "~/.emacs.d/themes/emacs-color-theme-solarized/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 ;(load-theme 'solarized t)
+
+;; I <3 visual line mode
+(global-visual-line-mode 1)
