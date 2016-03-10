@@ -13,32 +13,33 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/") t)
+
 ;; I'm lazy
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Make META play nicely on X
 (setq x-alt-keysym 'meta)
 
-;; TODO(sww): does this do what I want it to do?
+;; Reload any loaded buffer if it changes on disk.
 (global-auto-revert-mode t)
 
-;; window navigation
+;; Easier window navigation.
 (global-set-key (kbd "C-.") 'other-window)
 (global-set-key (kbd "C-,") 'prev-window)
 (defun prev-window ()
   (interactive)
   (other-window -1))
 
-;; font
+;; Default font.
 (set-face-attribute 'default nil :font "Ubuntu Mono for Powerline" :height 120)
 (add-to-list 'default-frame-alist '(font .  "Ubuntu Mono for Powerline 12"))
 
-;; Default browser
+;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "chromium")
 
-;; Easy clipboard pasting
+;; Paste the system clipboard into emacs.
 (global-set-key (kbd "C-x C-p") 'x-clipboard-yank)
 
 ;; eval-and-replace
@@ -54,25 +55,22 @@
            (insert (current-kill 0)))))
 (global-set-key (kbd "C-c e") 'eval-and-replace)
 
-;; Where in the world is..
-(setq calendar-latitude 37.3382)
-(setq calendar-longitude -121.8863)
-(setq calendar-location-name "San Jose, CA")
-
-;; save backup files to /tmp
+;; Save backup files to /tmp.
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; orgmode
+;; org-mode
 (setq org-log-done 'time)
 (setq org-startup-indented t)
 (setq org-agenda-files (list "~/todo.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(@/!)" "DELEGATED(@/!)" "|" "DONE(d!)" "CANCELLED(@/!)")))
+      '((sequence "TODO(t)" "STARTED(s)" "WAITING" "DELEGATED" "BLOCKED" "PROBLEM" "|" "DONE(d)" "CANCELLED")))
+      ; '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(@/!)" "DELEGATED(@/!)" "PROBLEM" "|" "DONE(d!)" "CANCELLED(@/!)")))
 (setq org-agenda-start-on-weekday nil)
+(setq org-ellipsis "⤷")
 
 ;; task dependencies
 (setq org-enforce-todo-dependencies t)
@@ -81,12 +79,13 @@
 
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
-(setq org-capture-templates
+(setq org-capture-templates  ; TODO(sww): update this; horribly out of date!!!
  '(("t" "Todo" entry (file+headline "~/todo.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %^t\n%?\n")
    ("e" "Expense" plain (file "~/Sync/personal/expenses.csv") "%(org-read-date),%^{Payee},%^{Amount}" :immediate-finish t)
    ("o" "Today Task" entry (file+headline "~/todo.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %t\n%?" :immediate-finish t)
    ("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?\nEntered on %U\n  %i\n  %a")))
 
+;; TODO(sww): incorporate these into their respective sections.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -97,6 +96,11 @@
     ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
  '(org-deadline-warning-days 1)
  '(org-default-notes-file "~/todo.org")
+ '(org-habit-graph-column 57)
+ '(org-habit-preceding-days 14)
+ '(org-modules
+   (quote
+    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
