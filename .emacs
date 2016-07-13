@@ -32,8 +32,8 @@
   (other-window -1))
 
 ;; Default font.
-(set-face-attribute 'default nil :font "Ubuntu Mono for Powerline" :height 120)
-(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono for Powerline 12"))
+(set-face-attribute 'default nil :font "Ubuntu Mono derivative Powerline" :height 120)
+(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono derivative Powerline 12"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
@@ -41,6 +41,12 @@
 
 ;; Paste the system clipboard into emacs.
 (global-set-key (kbd "C-x C-p") 'x-clipboard-yank)
+
+;; Programming preferences.
+(setq-default indent-tabs-mode nil)
+(setq c-basic-offset 2)
+(setq-default tab-width 2)
+(setq-default js-indent-level 2)
 
 ;; eval-and-replace
 ;; via http://emacsredux.com/blog/2013/06/21/eval-and-replace/
@@ -62,13 +68,12 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; org-mode
-(setq org-log-done 'time)
+(setq org-log-done 'nil)
 (setq org-startup-indented t)
 (setq org-agenda-files (list "~/todo.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s)" "WAITING" "DELEGATED" "BLOCKED" "PROBLEM" "|" "DONE(d)" "CANCELLED")))
-      ; '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(@/!)" "DELEGATED(@/!)" "PROBLEM" "|" "DONE(d!)" "CANCELLED(@/!)")))
+      '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "PROBLEM(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
 (setq org-agenda-start-on-weekday nil)
 (setq org-ellipsis "⤷")
 
@@ -94,7 +99,8 @@
  '(custom-safe-themes
    (quote
     ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
- '(org-deadline-warning-days 1)
+ '(org-agenda-files (quote ("~/todo.org")))
+ '(org-deadline-warning-days 5)
  '(org-default-notes-file "~/todo.org")
  '(org-habit-graph-column 57)
  '(org-habit-preceding-days 14)
