@@ -1,14 +1,14 @@
 [user]
 	name = Stephen Whitmore
-	email = sww@eight45.net
-[color]
-	diff = auto
-	status = auto
-	branch = auto
+	email = stephen.whitmore@gmail.com
 [alias]
-	st = status
 	di = diff
-	co = checkout
-	ci = commit
-	br = branch
-
+  p = push
+  co = checkout
+  br = branch
+  f = fetch
+  rom = rebase origin/master
+  pom = push origin master
+  pr = pull-request
+[push]
+	default = current
