@@ -1,20 +1,3 @@
-" Initialization ----------------------------------------------------------- {{{
-
-" Pathogen
-call pathogen#infect()
-call pathogen#helptags()
-
-" Airline
-" (https://github.com/bling/vim-airline)
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
-let g:airline_powerline_fonts = 1
-let g:airline_theme='dark'
-
-" Atom is pretty rad.
-colorscheme atom-dark-256
-
-" }}}
-" General ------------------------------------------------------------------ {{{
 set nocompatible
 syntax on
 set laststatus=2
@@ -32,17 +15,21 @@ set hlsearch
 set incsearch
 set encoding=utf-8
 set undofile
-"set relativenumber   " cool, but slows down the terminal too much =(
 set bs=2
 set nojoinspaces
 filetype plugin on
 set colorcolumn=100
+
+call pathogen#infect()
+source ~/.vim/bundle/commentary.vim
 
 " 100ms delay (or: let's me hit O and not need to wait around)
 set ttimeoutlen=100
 
 let mapleader = "-"
 let maplocalleader = "_"
+
+colorscheme badwolf
 
 " Backups
 set undodir=~/.vim/tmp/undo/
@@ -51,17 +38,10 @@ set directory=~/.vim/tmp/swap/
 set backup
 set noswapfile
 
-" }}}
-" Handy mappings ----------------------------------------------------------- {{{
-
 nnoremap ; :
 nnoremap ;; ;
 nnoremap <Leader>n :set nu!<CR>
 nnoremap <Leader>l :noh<CR>
-
-" TODO: What I'd *really* like is a nice hotkey that pasted my system
-" clipboard nicely.
-nnoremap <Leader>p :set paste!<CR>
 
 " who even uses substitute?
 nnoremap s <esc>:w<cr>
@@ -72,20 +52,9 @@ inoremap <esc> <nop>
 
 map <tab> %
 
-" Center screen when searching
-nnoremap n nzz
-nnoremap N Nzz
-
 " Have */# highlight matches, but not move the cursor.
 nnoremap * *<C-o>
 nnoremap # #<C-o>
-
-" let's be a little emacs-like insert mode
-inoremap <C-a> <esc>0i
-inoremap <C-e> <esc>$i
-
-" Fixes Y to be like D.
-nnoremap Y y$
 
 " Format paragraph. I never use register q.
 nnoremap qq gqip
@@ -116,7 +85,6 @@ nnoremap <Leader>ev :e $MYVIMRC<CR>
 nnoremap <Leader>evg :e ${MYVIMRC}_google<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
-" }}}
 " Filetype auto groups ----------------------------------------------------- {{{
 
 " vimscript
@@ -139,11 +107,9 @@ augroup END
 augroup markdown
   au!
   autocmd BufNewFile,BufRead *.md set filetype=markdown
-  autocmd FileType markdown nnoremap <LocalLeader>u yypVr-j
-  autocmd FileType markdown nnoremap <LocalLeader>U yypVr=j
-  autocmd FileType markdown setlocal textwidth=80
-  autocmd FileType markdown nnoremap <Leader>v :w !vmd<CR><CR>
-  autocmd FileType markdown colorscheme badwolf
+  " autocmd FileType markdown setlocal textwidth=80
+  "autocmd FileType markdown nnoremap <Leader>v :w !vmd<CR><CR>
+  "autocmd FileType markdown colorscheme badwolf
 
   " quickly turn author/repo into a github markdown link
   autocmd FileType markdown nnoremap <Leader>gh ByWi[<ESC>Ea](https://github.com/<ESC>pi)<ESC>
@@ -159,6 +125,9 @@ augroup javascript
   au!
   autocmd BufNewFile,BufRead *.json set ft=javascript
   nnoremap <Leader>S :!standard %<CR>
+
+  autocmd BufNewFile,BufRead *.wisp set ft=clojure
+  autocmd FileType clojure call PareditInitBuffer()
 augroup END
 
 augroup golang
@@ -220,17 +189,5 @@ augroup END
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " }}}
-" Plugin configuration ----------------------------------------------------- {{{
 
-" vim-buffabline
-let g:buftabline_separators=1
-let g:buftabline_numbers=0
-hi! BufTabLineCurrent guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=190 ctermfg=17
-hi! BufTabLineHidden guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=238 ctermfg=15
-hi! BufTabLineFill guibg=#151515 guifg=#ffffff gui=None cterm=None ctermbg=234 ctermfg=15
-
-" FZF
-set rtp+=~/.fzf
-nnoremap <C-p> :FZF<CR>
-
-" }}}
+nnoremap s <esc>:w<cr>
