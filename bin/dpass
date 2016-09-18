@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# based on: http://jasonwryan.com/blog/2014/08/02/password/
+# which is based on: https://github.com/cdown/passmenu
+
+shopt -s nullglob globstar
+
+nb='#121212'
+nf='#696969'
+sb='#121212'
+sf='#C34EC9'
+font="Dejavu Sans Mono:medium:size=9.5"
+dmenucmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
+
+prefix=${PASSWORD_STORE_DIR:-~/.password-store}
+files=( "$prefix"/**/*.gpg )
+files=( "${files[@]#"$prefix"/}" )
+files=( "${files[@]%.gpg}" )
+fbase=( "${files[@]#*/}" )
+
+word=$(printf '%s\n' "${fbase[@]}" | "${dmenucmd[@]}" "$@")
+
+if [[ -n $word ]]; then
+  for match in "${files[@]}"; do  
+    if [[ $word == ${match#*/} ]]; then
+      /usr/bin/pass show -c "$match" 2>/dev/null
+    fi  
+  done
+fi
