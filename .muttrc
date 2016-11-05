@@ -1,6 +1,6 @@
 # Basics {{{
 set realname="Stephen Whitmore"
-set from=stephen.whitmore@gmail.com
+set from=stephen@eight45.net
 
 set editor="vim"
 
@@ -29,8 +29,8 @@ set header_cache="~/.mutt/cache/headers"
 set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file=~/.mutt/certificates
 set mailcap_path=~/.mutt/mailcap
-set record = "~/Mail/GMail/Sent"
-set postponed = "~/Mail/GMail/Drafts"
+set record = "~/Mail/eight45/Sent"
+set postponed = "~/Mail/eight45/Drafts"
 
 unset mark_old  # Read/unread is good enough, thanks
 # }}}
@@ -42,13 +42,13 @@ folder-hook * push "<limit>~U<enter>"
 # }}}
 
 # Sidebar {{{
-set sidebar_delim = ' | '
+# set sidebar_delim = ' | '
 set sidebar_visible = yes
-set sidebar_width = 35
+set sidebar_width = 30
 color sidebar_new brightyellow default
-bind index,pager <down>   sidebar-next
-bind index,pager <up>   sidebar-prev
-bind index,pager <right>   sidebar-open
+bind index,pager J   sidebar-next
+bind index,pager K   sidebar-prev
+bind index,pager L   sidebar-open
 # }}}
 
 # Index {{{
@@ -58,14 +58,14 @@ set index_format = "[%Z]  %D  %-25.20F  %s"
 
 # Mailboxes {{{
 mailboxes =GMail/INBOX \
-          =IPFS/INBOX \
-          =GMail/Reading\ List \
-          =GMail/SudoRoom \
-          =GMail/NodeSchool \
-          =GMail/Sent \
-          =GMail/Drafts \
           =eight45/INBOX \
-          =eight45/Sent
+          =eight45/Sent \
+          =GMail/IPFS \
+          =GMail/NodeSchool \
+          =GMail/SudoRoom \
+          =GMail/Drafts \
+          =GMail/Sent \
+          =GMail/Reading\ List
 
 ## hotkeys
 macro index gi "<change-folder> =GMail/INBOX<enter>" "Go to Inbox"
@@ -117,7 +117,8 @@ bind index \Cp      recall-message
 bind index <space>  collapse-thread
 
 # force inbox sync
-macro index si "<shell-escape>/usr/bin/offlineimap -q<enter>" "Sync Inbox"
+macro index si "<shell-escape>${HOME}/bin/mail_sync<enter>" "Sync Inbox"
+macro index se "<shell-escape>getmail<enter>" "Sync Inbox"
 
 # search via notmuch
 macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py<enter><change-folder-readonly>~/.cache/mutt_results<enter>"
@@ -134,15 +135,16 @@ set uncollapse_jump
 
 # colour scheme de jour
 # source ~/.mutt/numix.muttrc
-source ~/.mutt/vombatidae.mutt
+# source ~/.mutt/vombatidae.mutt
 # source ~/.mutt/sjl.muttrc
+source ~/.mutt/badwolf.muttrc
 #source ~/.mutt/zenburn.muttrc
 #source ~/.mutt/molokai.muttrc
 #source ~/.mutt/kindly.muttrc
 #source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
 
 # Colour messages differently when I'm GitHub-mentioned.
-color index green color234 '~b "@noffle"'
+color index green color234 '~b "noffle"'
 # }}}
 
 # URL handling {{{
