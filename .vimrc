@@ -20,8 +20,12 @@ set nojoinspaces
 filetype plugin on
 set colorcolumn=100
 
-call pathogen#infect()
-source ~/.vim/bundle/commentary.vim
+""" vim-plug (https://github.com/junegunn/vim-plug)
+" To install plugins: ':PlugInstall'
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-commentary'
+Plug 'fatih/vim-go'
+call plug#end()
 
 " 100ms delay (or: let's me hit O and not need to wait around)
 set ttimeoutlen=100
@@ -107,7 +111,7 @@ augroup END
 augroup markdown
   au!
   autocmd BufNewFile,BufRead *.md set filetype=markdown
-  " autocmd FileType markdown setlocal textwidth=80
+  autocmd FileType markdown setlocal textwidth=80
   "autocmd FileType markdown nnoremap <Leader>v :w !vmd<CR><CR>
   "autocmd FileType markdown colorscheme badwolf
 
@@ -191,3 +195,9 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " }}}
 
 nnoremap s <esc>:w<cr>
+
+if &term =~ '256color'
+  " Disable Background Color Erase (BCE) so that color schemes
+  " work properly when Vim is used inside tmux and GNU screen.
+  set t_ut=
+endif
