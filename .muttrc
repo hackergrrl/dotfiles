@@ -14,13 +14,13 @@ set quit=ask-yes
 
 # PGP {{{
 # source ~/.mutt/gpg2.rc
-# source ~/.mutt/gpg.rc
+source ~/.mutt/gpg.rc
 # }}}
 
 # Mailbox config {{{
 set mbox_type=Maildir
 set folder=$HOME/Mail
-set spoolfile=$HOME/Mail/GMail/INBOX
+set spoolfile=$HOME/Mail/eight45/INBOX
 # }}}
 
 # Various {{{
@@ -57,15 +57,10 @@ set index_format = "[%Z]  %D  %-25.20F  %s"
 # }}}
 
 # Mailboxes {{{
-mailboxes =GMail/INBOX \
-          =eight45/INBOX \
+mailboxes =eight45/INBOX \
           =eight45/Sent \
-          =GMail/IPFS \
-          =GMail/NodeSchool \
-          =GMail/SudoRoom \
-          =GMail/Drafts \
-          =GMail/Sent \
-          =GMail/Reading\ List
+          =eight45/Drafts \
+          =GMail/INBOX
 
 ## hotkeys
 macro index gi "<change-folder> =GMail/INBOX<enter>" "Go to Inbox"
