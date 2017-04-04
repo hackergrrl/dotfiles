@@ -23,7 +23,7 @@ if [[ -n $word ]]; then
   for match in "${files[@]}"; do  
     if [[ $word == ${match#*/} ]]; then
       /usr/bin/pass show -c "$match" 2>/dev/null
-      notify-send 'dpass' 'Password copied.'
+      notify-send "dpass: $match" 'Password copied.'
     fi
   done
 fi
