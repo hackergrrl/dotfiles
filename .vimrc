@@ -25,6 +25,8 @@ set colorcolumn=100
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-commentary'
 Plug 'fatih/vim-go'
+Plug 'vim-scripts/paredit.vim'
+Plug 'vim-scripts/VimClojure'
 call plug#end()
 
 " 100ms delay (or: let's me hit O and not need to wait around)
@@ -97,6 +99,12 @@ augroup filetype_vim
   autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
+" git-commit
+augroup git_commit
+  au!
+  autocmd FileType gitcommit setlocal textwidth=80
+augroup END
+
 " Perform spell checking when composing mail or markdown.
 augroup spell_check
   au!
@@ -119,6 +127,8 @@ augroup markdown
   autocmd FileType markdown nnoremap <Leader>gh ByWi[<ESC>Ea](https://github.com/<ESC>pi)<ESC>
 augroup END
 
+  " turn a npm module name into a link
+  :nnoremap <leader>L EByWE:r!npm info <C-R>" homepage<CR>0i(<ESC>A)<ESC>k$Bi[<ESC>Ea]<ESC>Jx$
 " vim-task
 augroup tasks
   autocmd FileType task nnoremap <silent> <buffer> <cr> :call Toggle_task_status()<CR><CR>
@@ -129,9 +139,12 @@ augroup javascript
   au!
   autocmd BufNewFile,BufRead *.json set ft=javascript
   nnoremap <Leader>S :!standard %<CR>
+  nnoremap <Leader>T :!ltape %<CR>
 
   autocmd BufNewFile,BufRead *.wisp set ft=clojure
   autocmd FileType clojure call PareditInitBuffer()
+
+  autocmd FileType javascript inoremap <leader>cl console.log(
 augroup END
 
 augroup golang
@@ -201,3 +214,10 @@ if &term =~ '256color'
   " work properly when Vim is used inside tmux and GNU screen.
   set t_ut=
 endif
+
+inoremap <leader>N <ESC>:r!date<CR>i<BS><ESC>A
+
+nnoremap ) 10j
+nnoremap ( 10k
+
+nnoremap <leader>mk :set filetype=markdown<CR>
