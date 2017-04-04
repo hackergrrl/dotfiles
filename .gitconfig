@@ -4,11 +4,18 @@
 [alias]
 	di = diff
   p = push
+  a = add
+  cm = commit
   co = checkout
   br = branch
   f = fetch
   rom = rebase origin/master
   pom = push origin master
   pr = pull-request
+  rh = reset HEAD
+  cpop = reset --soft HEAD~1
+  dic = diff --cached
+  rc = rebase --continue
+  cp = cherry-pick
 [push]
 	default = current
