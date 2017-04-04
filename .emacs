@@ -1,10 +1,10 @@
 ;; Personal info
-(setq user-full-name "Stephen Whitmore"
-      user-mail-address "stephen.whitmore@gmail.com")
+(setq user-full-name    "Stephen Whitmore"
+      user-mail-address "stephen@eight45.net")
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-;; enable file encryption
+;; Enable file encryption
 (require 'epa-file)
 (epa-file-enable)
 
@@ -13,9 +13,9 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 
-;; I'm lazy
+;; Save a few keystrokes
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Make META play nicely on X
@@ -23,6 +23,10 @@
 
 ;; Reload any loaded buffer if it changes on disk.
 (global-auto-revert-mode t)
+
+;; Easier buffer navigation.
+(global-set-key (kbd "M-j") 'next-buffer)
+(global-set-key (kbd "M-k") 'previous-buffer)
 
 ;; Easier window navigation.
 (global-set-key (kbd "C-.") 'other-window)
@@ -32,8 +36,8 @@
   (other-window -1))
 
 ;; Default font.
-(set-face-attribute 'default nil :font "Ubuntu Mono derivative Powerline" :height 120)
-(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono derivative Powerline 12"))
+(set-face-attribute 'default nil :font "Ubuntu Mono" :height 130)
+(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 13"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
@@ -42,11 +46,20 @@
 ;; Paste the system clipboard into emacs.
 (global-set-key (kbd "C-x C-p") 'x-clipboard-yank)
 
+;; I <3 visual line mode
+(global-visual-line-mode 1)
+
+;; Prefer side-by-side when there's room.
+(setq split-width-threshold 140)
+
 ;; Programming preferences.
 (setq-default indent-tabs-mode nil)
 (setq c-basic-offset 2)
 (setq-default tab-width 2)
 (setq-default js-indent-level 2)
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; eval-and-replace
 ;; via http://emacsredux.com/blog/2013/06/21/eval-and-replace/
@@ -59,7 +72,7 @@
              (current-buffer))
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
-(global-set-key (kbd "C-c e") 'eval-and-replace)
+(global-set-key (kbd "C-x e") 'eval-and-replace)
 
 ;; Save backup files to /tmp.
 (setq backup-directory-alist
@@ -68,16 +81,29 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; org-mode
-(setq org-log-done 'nil)
+(setq org-log-done 'time)
 (setq org-startup-indented t)
-(setq org-agenda-files (list "~/todo.org"))
+(setq org-agenda-files (list "~/life.org" "~/dd/dd.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "PROBLEM(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+      '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "DELEGATED(g@/!)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
 (setq org-agenda-start-on-weekday nil)
 (setq org-ellipsis "⤷")
 
-;; task dependencies
+;; Always make sure an 'Effort' is set when clocking in to a task.
+(add-hook 'org-clock-in-prepare-hook
+          'my/org-mode-ask-effort)
+(defun my/org-mode-ask-effort ()
+  "Ask for an effort estimate when clocking in."
+  (unless (org-entry-get (point) "Effort")
+    (let ((effort
+           (completing-read
+            "Effort: "
+            (org-entry-get-multivalued-property (point) "Effort"))))
+      (unless (equal effort "")
+        (org-set-property "Effort" effort)))))
+
+;; Task dependencies
 (setq org-enforce-todo-dependencies t)
 (setq org-track-ordered-property-with-tag t)
 (setq org-agenda-dim-blocked-tasks t)
@@ -85,9 +111,8 @@
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates  ; TODO(sww): update this; horribly out of date!!!
- '(("t" "Todo" entry (file+headline "~/todo.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %^t\n%?\n")
-   ("e" "Expense" plain (file "~/Sync/personal/expenses.csv") "%(org-read-date),%^{Payee},%^{Amount}" :immediate-finish t)
-   ("o" "Today Task" entry (file+headline "~/todo.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %t\n%?" :immediate-finish t)
+ '(("t" "Todo" entry (file+headline "~/life.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %^t\n%?\n")
+   ("o" "Today Task" entry (file+headline "~/life.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %t\n%?" :immediate-finish t)
    ("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?\nEntered on %U\n  %i\n  %a")))
 
 ;; TODO(sww): incorporate these into their respective sections.
