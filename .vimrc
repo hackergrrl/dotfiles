@@ -144,7 +144,9 @@ augroup javascript
   autocmd BufNewFile,BufRead *.wisp set ft=clojure
   autocmd FileType clojure call PareditInitBuffer()
 
-  autocmd FileType javascript inoremap <leader>cl console.log(
+  autocmd FileType javascript inoremap <leader>cl console.log()<ESC>i
+  autocmd FileType javascript inoremap <leader>ce console.error()<ESC>i
+  autocmd FileType javascript inoremap <leader>ct console.trace()<ESC>i
 augroup END
 
 augroup golang
