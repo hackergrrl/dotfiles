@@ -17,5 +17,6 @@
   dic = diff --cached
   rc = rebase --continue
   cp = cherry-pick
+  serve = "!server(){ git daemon --verbose --export-all --base-path=. --reuseaddr $@; }; server"
 [push]
 	default = current
