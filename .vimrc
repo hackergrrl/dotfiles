@@ -18,7 +18,10 @@ set undofile
 set bs=2
 set nojoinspaces
 filetype plugin on
-set colorcolumn=100
+
+" Stop breaking our darned editor!
+" https://www.reddit.com/r/vim/comments/5w2rom/paste_escape_sequences_in_vim_8/
+set t_BE=
 
 """ vim-plug (https://github.com/junegunn/vim-plug)
 " To install plugins: ':PlugInstall'
@@ -190,7 +193,7 @@ augroup trailing_whitespace
   au!
   au Syntax * syn match localWhitespaceError /\(zs\%#|\s\)\+$/ display
   au Syntax * syn match localWhitespaceError / \+\ze\t/ display
-  au Syntax * syn match localWhitespaceError /\%>100v.\+/ display
+  " au Syntax * syn match localWhitespaceError /\%>100v.\+/ display
 augroup END
 
 " Highlight trailing whitespace.
