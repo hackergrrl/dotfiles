@@ -13,7 +13,7 @@ set $mod Mod4
 set $alt Mod1
 
 # class           border    bg        text      indicator   child_border
-client.focused    #772777   #771777   #FFFFFF   #FF27FF     #790079
+client.focused    #005577   #005577   #FFFFFF   #0099FF     #005599
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -39,6 +39,7 @@ bindsym $mod+Return exec "termite"
 
 # start a browser
 bindsym $mod+b exec "vimb"
+bindsym $mod+d exec "dillo"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -111,6 +112,7 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+ctrl+1 workspace 11
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -157,7 +159,21 @@ bar {
   status_command i3status
 	position top
   colors {
-    background        #180318
-    focused_workspace  #982798 #661766 #FFFFFF
+    background         #030318
+    focused_workspace  #2787A8 #474796 #FFFFFF
   }
 }
+
+# green
+# client.focused    #277727   #177717   #FFFFFF   #2FFF2F     #007900
+#   colors {
+#     background         #031803
+#     focused_workspace  #279827 #176617 #FFFFFF
+#   }
+
+# magenta
+# client.focused    #772777   #771777   #FFFFFF   #FF27FF     #790079
+  # colors {
+  #   background         #180318
+  #   focused_workspace  #982798 #661766 #FFFFFF
+  # }
