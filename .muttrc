@@ -1,16 +1,16 @@
-# Basics {{{
-set realname="Stephen Whitmore"
-set from=stephen@eight45.net
+  # Basics {{{
+  set realname="Stephen Whitmore"
+  set from=stephen@eight45.net
 
-set editor="vim"
+  set editor="vim"
 
-set charset = "UTF-8"
-set locale = "en_US.UTF-8"
-set ascii_chars
+  set charset = "UTF-8"
+  # set locale = "en_US.UTF-8"  # no longer exists?
+  set ascii_chars
 
-# Ask before quitting, but default to yes
-set quit=ask-yes
-# }}}
+  # Ask before quitting, but default to yes
+  set quit=ask-yes
+  # }}}
 
 # PGP {{{
 # source ~/.mutt/gpg2.rc
