@@ -18,7 +18,7 @@
   "dependencies": {},
   "devDependencies": {
     "tape": "~4.6.2",
-    "standard": "~8.3.0"
+    "standard": "~10.0.0"
   },
   "license": "ISC"
 }
