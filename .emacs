@@ -10,8 +10,8 @@
 
 ;; Package management
 (package-initialize)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;(add-to-list 'package-archives
+;             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
@@ -23,6 +23,8 @@
 
 ;; Reload any loaded buffer if it changes on disk.
 (global-auto-revert-mode t)
+
+(global-set-key (kbd "M-o") 'kill-this-buffer)
 
 ;; Easier buffer navigation.
 (global-set-key (kbd "M-j") 'next-buffer)
@@ -61,6 +63,11 @@
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(defun curl (url)
+  "Fetches the raw data at URL and prints it to the current buffer."
+  (interactive "sURL to fetch: ")
+  (insert (shell-command-to-string (concat "curl -Ls " url))))
+
 ;; eval-and-replace
 ;; via http://emacsredux.com/blog/2013/06/21/eval-and-replace/
 (defun eval-and-replace ()
@@ -83,10 +90,10 @@
 ;; org-mode
 (setq org-log-done 'time)
 (setq org-startup-indented t)
-(setq org-agenda-files (list "~/life.org" "~/dd/dd.org"))
+(setq org-agenda-files (list "~/new.org" "~/dd/dd.org" "~/dd/dd.org_archive"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "DELEGATED(g@/!)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
 (setq org-agenda-start-on-weekday nil)
 (setq org-ellipsis "⤷")
 
@@ -111,9 +118,11 @@
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-capture-templates  ; TODO(sww): update this; horribly out of date!!!
- '(("t" "Todo" entry (file+headline "~/life.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %^t\n%?\n")
-   ("o" "Today Task" entry (file+headline "~/life.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %t\n%?" :immediate-finish t)
-   ("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?\nEntered on %U\n  %i\n  %a")))
+      '(("t" "Todo" entry (file+headline "~/new.org" "Inbox") "* TODO %^{Task}%?\n")
+        ("d" "Dd Todo" entry (file+headline "~/dd/dd.org" "Inbox") "* TODO %^{Task}%?\n")
+        ;("o" "Today Task" entry (file+headline "~/life.org" "Tasks") "* TODO %^{Task}\nSCHEDULED: %t\n%?" :immediate-finish t)
+        ;("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?\nEntered on %U\n  %i\n  %a")
+        ))
 
 ;; TODO(sww): incorporate these into their respective sections.
 (custom-set-variables
@@ -121,13 +130,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(custom-safe-themes
    (quote
     ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
  '(org-agenda-files (quote ("~/todo.org")))
  '(org-deadline-warning-days 5)
- '(org-default-notes-file "~/todo.org")
- '(org-habit-graph-column 57)
+ '(org-default-notes-file "~/life.org")
+ '(org-habit-graph-column 45)
  '(org-habit-preceding-days 14)
  '(org-modules
    (quote
@@ -138,29 +151,10 @@
 (eval-after-load 'org-agenda
   '(progn
      (define-key org-agenda-mode-map (kbd "s-<tab>") 'show-todo-org)
-     (define-key org-agenda-mode-map (kbd "<return>") 'org-agenda-goto)
-     (defun mark-done-in-agenda () (interactive) (org-agenda-todo "DONE"))
-     (defun mark-waiting-in-agenda () (interactive) (org-agenda-todo "WAITING"))
-     (define-key org-agenda-mode-map (kbd "W") 'mark-waiting-in-agenda)
-     (define-key org-agenda-mode-map (kbd "x") 'mark-done-in-agenda)))
+     (define-key org-agenda-mode-map (kbd "<return>") 'org-agenda-goto)))
 
 (eval-after-load "org"
   '(progn
-     ;; Refresh agenda on save
-;     (add-hook 'after-save-hook
-;	       (lambda ()
-;		 (if (member major-mode (list 'org-mode))
-;		     (progn
-;		       (org-agenda-list)
-;		       (other-window 1)))))
-
-     ;; Handy shortcuts for moving around.
-     (define-key org-mode-map (kbd "s-<tab>") 'org-agenda-list)
-     (defun show-todo-org ()
-       "Show my standard todo.org file."
-       (interactive)
-       (pop-to-buffer "todo.org"))
-
      (define-prefix-command 'org-todo-state-map)
      (define-key org-mode-map "\C-cx" 'org-todo-state-map)
      (define-key org-mode-map "\C-\M-j" 'org-insert-todo-heading)
