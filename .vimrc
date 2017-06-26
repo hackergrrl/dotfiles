@@ -18,6 +18,7 @@ set undofile
 set bs=2
 set nojoinspaces
 filetype plugin on
+" set colorcolumn=100
 
 " Stop breaking our darned editor!
 " https://www.reddit.com/r/vim/comments/5w2rom/paste_escape_sequences_in_vim_8/
@@ -150,6 +151,7 @@ augroup javascript
   autocmd FileType javascript inoremap <leader>cl console.log()<ESC>i
   autocmd FileType javascript inoremap <leader>ce console.error()<ESC>i
   autocmd FileType javascript inoremap <leader>ct console.trace()<ESC>i
+  autocmd FileType javascript inoremap <leader>cd console.dir(, {depth:null})<ESC>Bba
 augroup END
 
 augroup golang
