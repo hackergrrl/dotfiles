@@ -1,0 +1,74 @@
+[options]
+resize_grip = false
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+visible_bell = true
+mouse_autohide = true
+allow_bold = false
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = Dejavu Sans Mono 10.5
+scrollback_lines = 10000
+search_wrap = true
+geometry = 640x480
+#icon_name = terminal
+
+# 0.0: opaque, 1.0: transparent
+transparency = 0.0
+pseudo_transparency = false
+
+# "system", "on" or "off"
+cursor_blink = off
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# $BROWSER is used by default
+browser = chromium
+
+# word characters used for word selection
+# (default if unset: all graphic non-punctuation/space characters)
+#word_chars = -A-Za-z0-9,./?%&#:_=+@~
+
+[colors]
+; foreground = #999999
+foreground = #FFFFFF
+foreground_bold = #ffffff
+#foreground_dim = #888888
+background = rgba(0, 0, 0, 0.85)
+; background = #080808
+cursor = #5E468C
+
+# if unset, will reverse foreground and background
+highlight = #2f2f2f
+
+# colors from color0 to color254 can be set
+#color0 = #242424
+#color1 = #8A2F58
+#color2 = #287373
+#color3 = #914E89
+#color4 = #395573
+#color5 = #5E468C
+#color6 = #2B7694
+#color7 = #899CA1
+#color8 = #474747
+#color9 = #CF4F88
+#color10 = #53A6A6
+#color11 = #BF85CC
+#color12 = #4779B3
+#color13 = #7F62B3
+#color14 = #47959E
+#color15 = #C0C0C0
+
+[hints]
+font = DejaVu Sans Mono 10
+foreground = #121212
+background = #888888
+padding = 2
+border = #3f3f3f
+border_width = 0
+#roundness = 2.0
+
+# vim: ft=dosini
