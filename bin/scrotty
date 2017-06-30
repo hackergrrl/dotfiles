@@ -1,0 +1,4 @@
+#!/bin/bash
+
+scrot -sb /tmp/aus.png
+notify-send -u normal "scrot" "Screenshot taken to /tmp/aus.png"

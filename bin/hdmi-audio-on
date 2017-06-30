@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp $HOME/.asoundrc_hdmi $HOME/.asoundrc

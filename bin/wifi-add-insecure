@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DST=/etc/wpa_supplicant/wpa_supplicant.conf
+
+echo "network={" | sudo tee -a $DST
+echo "	ssid="'"'"$1"'"'"" | sudo tee -a $DST
+echo "	key_mgmt=NONE" | sudo tee -a $DST
+echo "}" | sudo tee -a $DST
+

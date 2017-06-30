@@ -1,0 +1,6 @@
+#!/bin/bash
+
+FILE=/sys/class/backlight/radeon_bl0/brightness
+
+echo "$(cat ${FILE}) - 32" | bc | sudo tee ${FILE}
+

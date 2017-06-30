@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DST=/etc/wpa_supplicant/wpa_supplicant.conf
+ESSID=$1
+PASS=$2
+
+echo "network={" | sudo tee -a $DST
+echo "	ssid="'"'"$ESSID"'"'"" | sudo tee -a $DST
+echo "	psk="'"'"$PASS"'"'"" | sudo tee -a $DST
+echo "}" | sudo tee -a $DST
+

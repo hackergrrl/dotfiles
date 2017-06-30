@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo iwlist scan 2> /dev/null | awk '/key:o/, /ESSID/' | tr -d '\n' | sed 's/ESSID:"//g' | tr '"' '\n' | sed 's/Encryption key://g' | sed 's/\W*on\W\W\W\W\W\W\W\W\W\W\W\W\W\W/ENCRYPTED/' | sed 's/\W*off\W\W\W\W\W\W\W\W\W/OPEN/' | sort | uniq
+
+

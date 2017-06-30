@@ -1,0 +1,9 @@
+#!/bin/bash
+
+scp $1 sw:~/tmp/
+
+BASE=$(basename $1)
+
+URL="http://tmp.stephenwhitmore.com/${BASE}"
+echo $URL
+echo $URL | xclip -selection clipboard

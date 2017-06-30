@@ -1,0 +1,4 @@
+#!/bin/bash
+
+(sleep 10 && sudo dhcpcd) &
+sudo wpa_supplicant -D nl80211 -i wlp1s0 -c /etc/wpa_supplicant/wpa_supplicant.conf

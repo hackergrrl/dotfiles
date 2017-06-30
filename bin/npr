@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mplayer http://fm939.wnyc.org/wnycfm
