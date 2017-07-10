@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 FILE=/sys/class/backlight/radeon_bl0/brightness
 
