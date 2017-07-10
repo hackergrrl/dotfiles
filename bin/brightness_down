@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FILE=/sys/class/backlight/radeon_bl0/brightness
+FILE=/sys/class/backlight/intel_backlight/brightness
 
-echo "$(cat ${FILE}) - 32" | bc | sudo tee ${FILE}
+echo "$(cat ${FILE}) - 1000" | bc | sudo tee ${FILE}
 

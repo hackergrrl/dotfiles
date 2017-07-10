@@ -1,6 +1,4 @@
-"/home/stephen/bin/mod_brightness 300"
-    m:0x0 + c:233
-    XF86MonBrightnessUp
-"/home/stephen/bin/mod_brightness -300"
-    m:0x0 + c:232
-    XF86MonBrightnessDown
+"/home/sww/bin/brightness_up"
+	XF86MonBrightnessUp
+"/home/sww/bin/brightness_down"
+	XF86MonBrightnessDown

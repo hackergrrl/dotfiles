@@ -9,7 +9,7 @@ allow_bold = false
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Dejavu Sans Mono 10.5
+font = Dejavu Sans Mono 13
 scrollback_lines = 10000
 search_wrap = true
 geometry = 640x480
@@ -63,7 +63,7 @@ highlight = #2f2f2f
 #color15 = #C0C0C0
 
 [hints]
-font = DejaVu Sans Mono 10
+#font = DejaVu Sans Mono 13
 foreground = #121212
 background = #888888
 padding = 2
