@@ -67,7 +67,7 @@ macro index gi "<change-folder> =GMail/INBOX<enter>" "Go to Inbox"
 macro index gd "<change-folder> =GMail/Drafts<enter>" "Go to Drafts"
 macro index gs "<change-folder> =GMail/Sent<enter>" "Go to Sent"
 
-macro index sm ":set sendmail="/usr/bin/msmtp"<enter>" "Send mail with SMTP"
+macro index sm ":set sendmail="msmtp"<enter>" "Send mail with SMTP"
 
 macro index U "l ~U<enter>"
 macro index A "l all<enter>"
@@ -77,7 +77,7 @@ macro index A "l all<enter>"
 set fast_reply
 set sendmail_wait = 0 # wait for sending to successfully finish, because email is important
 
-set sendmail = "/usr/bin/msmtp"
+set sendmail = "/usr/bin/env msmtp"
 # }}}
 
 # Viewing mail {{{
