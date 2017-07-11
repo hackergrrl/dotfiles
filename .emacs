@@ -38,8 +38,8 @@
   (other-window -1))
 
 ;; Default font.
-(set-face-attribute 'default nil :font "Ubuntu Mono" :height 130)
-(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 13"))
+(set-face-attribute 'default nil :font "Ubuntu Mono" :height 145)
+(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 14.5"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
