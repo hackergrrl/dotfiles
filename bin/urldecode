@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+function collect (stream, cb) {
+  var res = ''
+  stream.on('data', function (data) { res += data.toString() })
+  stream.once('end', function () {
+    cb(null, res)
+  })
+  stream.once('error', function (err) {
+    cb(err)
+  })
+}
+
+collect(process.stdin, function (err, data) {
+  var line = data.split('\n')[0]
+  console.log(decodeURIComponent(line))
+})
+
