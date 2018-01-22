@@ -9,7 +9,8 @@ allow_bold = false
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Dejavu Sans Mono 13
+font = Dejavu Sans Mono 10.5
+#font = Ubuntu Mono 14
 scrollback_lines = 10000
 search_wrap = true
 geometry = 640x480
@@ -17,7 +18,7 @@ geometry = 640x480
 
 # 0.0: opaque, 1.0: transparent
 transparency = 0.0
-pseudo_transparency = false
+pseudo_transparency = true
 
 # "system", "on" or "off"
 cursor_blink = off
@@ -26,7 +27,7 @@ cursor_blink = off
 cursor_shape = block
 
 # $BROWSER is used by default
-browser = chromium
+browser = qutebrowser
 
 # word characters used for word selection
 # (default if unset: all graphic non-punctuation/space characters)
@@ -37,7 +38,7 @@ browser = chromium
 foreground = #FFFFFF
 foreground_bold = #ffffff
 #foreground_dim = #888888
-background = rgba(0, 0, 0, 0.85)
+background = rgba(0, 0, 0, 0.55)
 ; background = #080808
 cursor = #5E468C
 
@@ -49,7 +50,7 @@ highlight = #2f2f2f
 #color1 = #8A2F58
 #color2 = #287373
 #color3 = #914E89
-#color4 = #395573
+color4 = #5050FF
 #color5 = #5E468C
 #color6 = #2B7694
 #color7 = #899CA1
@@ -65,7 +66,7 @@ highlight = #2f2f2f
 [hints]
 #font = DejaVu Sans Mono 13
 foreground = #121212
-background = #888888
+#background = #888888
 padding = 2
 border = #3f3f3f
 border_width = 0
