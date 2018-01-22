@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+git log | grep -C 1 "^commit" | grep "^Author" | sort | uniq -c | sort -n
