@@ -17,6 +17,9 @@
   dic = diff --cached
   rc = rebase --continue
   cp = cherry-pick
+  s = stash
+  sp = stash pop
   serve = "!server(){ git daemon --verbose --export-all --base-path=. --reuseaddr $@; }; server"
+  spush = "!git push origin && git push ssb"
 [push]
 	default = current
