@@ -1,6 +1,6 @@
   # Basics {{{
   set realname="Stephen Whitmore"
-  set from=stephen@eight45.net
+  set from=sww@eight45.net
 
   set editor="vim"
 
@@ -60,17 +60,9 @@ set index_format = "[%Z]  %D  %-25.20F  %s"
 mailboxes =eight45/INBOX \
           =eight45/Sent \
           =eight45/Drafts \
+          =cjdns \
+          =ssb \
           =GMail/INBOX
-
-## hotkeys
-macro index gi "<change-folder> =GMail/INBOX<enter>" "Go to Inbox"
-macro index gd "<change-folder> =GMail/Drafts<enter>" "Go to Drafts"
-macro index gs "<change-folder> =GMail/Sent<enter>" "Go to Sent"
-
-macro index sm ":set sendmail="msmtp"<enter>" "Send mail with SMTP"
-
-macro index U "l ~U<enter>"
-macro index A "l all<enter>"
 #}}}
 
 # Sending mail {{{
@@ -111,8 +103,16 @@ bind index G        last-entry
 bind index \Cp      recall-message
 bind index <space>  collapse-thread
 
+## hotkeys
+macro index xe ":set sendmail='msmtp -a eight45'; set from='sww@eight45.net'" "Send mail with SMTP"
+macro index xg ":set sendmail='msmtp -a gmail'; set from='stephen.whitmore@gmail.com'" "Send mail with SMTP"
+macro index xd ":set sendmail='msmtp -a dd'; set from='swhitmore@digital-democracy.org'" "Send mail with SMTP"
+
+macro index U "l ~U<enter>"
+macro index A "l all<enter>"
+
 # force inbox sync
-macro index si "<shell-escape>${HOME}/bin/mail_sync<enter>" "Sync Inbox"
+# macro index si "<shell-escape>${HOME}/bin/mail_sync<enter>" "Sync Inbox"
 macro index se "<shell-escape>getmail<enter>" "Sync Inbox"
 
 # search via notmuch
@@ -139,7 +139,13 @@ source ~/.mutt/badwolf.muttrc
 #source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
 
 # Colour messages differently when I'm GitHub-mentioned.
-color index green color234 '~b "noffle"'
+color index green color233 '~b "noffle"'
+color index cyan color233 '~t "stephen.whitmore@gmail.com"'
+color index cyan color233 '~t "stephenwhitmore@gmail.com"'
+color index cyan color233 '~c "stephen.whitmore@gmail.com"'
+color index cyan color233 '~c "stephenwhitmore@gmail.com"'
+color index brightmagenta color233 '~t "swhitmore@digital-democracy.org'
+color index brightmagenta  color233 '~c "swhitmore@digital-democracy.org'
 # }}}
 
 # URL handling {{{
