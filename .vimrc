@@ -14,7 +14,6 @@ set expandtab
 set hlsearch
 set incsearch
 set encoding=utf-8
-set undofile
 set bs=2
 set nojoinspaces
 filetype plugin on
@@ -23,6 +22,13 @@ filetype plugin on
 " Stop breaking our darned editor!
 " https://www.reddit.com/r/vim/comments/5w2rom/paste_escape_sequences_in_vim_8/
 set t_BE=
+
+" Disable Background Color Erase (BCE) so that color schemes work properly
+" when Vim is used inside tmux and GNU screen.
+" https://superuser.com/questions/457911/in-vim-background-color-changes-on-scrolling/588243
+" if &term =~ '256color'
+    set t_ut=
+" endif
 
 """ vim-plug (https://github.com/junegunn/vim-plug)
 " To install plugins: ':PlugInstall'
@@ -40,9 +46,13 @@ let mapleader = "-"
 let maplocalleader = "_"
 
 colorscheme badwolf
+set background=dark
 
 " Backups
+set undofile
 set undodir=~/.vim/tmp/undo/
+set undolevels=1000
+set undoreload=10000
 set backupdir=~/.vim/tmp/backup/
 set directory=~/.vim/tmp/swap/
 set backup
@@ -152,6 +162,8 @@ augroup javascript
   autocmd FileType javascript inoremap <leader>ce console.error()<ESC>i
   autocmd FileType javascript inoremap <leader>ct console.trace()<ESC>i
   autocmd FileType javascript inoremap <leader>cd console.dir(, {depth:null})<ESC>Bba
+
+  autocmd FileType javascript inoremap <leader>v //------------------------------------------------------------------------------
 augroup END
 
 augroup golang
@@ -227,4 +239,4 @@ inoremap <leader>N <ESC>:r!date<CR>i<BS><ESC>A
 nnoremap ) 10j
 nnoremap ( 10k
 
-nnoremap <leader>mk :set filetype=markdown<CR>
+nnoremap <leader>md :set filetype=markdown<CR>
