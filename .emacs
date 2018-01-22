@@ -1,6 +1,6 @@
 ;; Personal info
 (setq user-full-name    "Stephen Whitmore"
-      user-mail-address "stephen@eight45.net")
+      user-mail-address "sww@eight45.net")
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
@@ -38,8 +38,8 @@
   (other-window -1))
 
 ;; Default font.
-(set-face-attribute 'default nil :font "Ubuntu Mono" :height 145)
-(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 14.5"))
+(set-face-attribute 'default nil :font "Ubuntu Mono" :height 120)
+(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 12.0"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
@@ -68,6 +68,18 @@
   (interactive "sURL to fetch: ")
   (insert (shell-command-to-string (concat "curl -Ls " url))))
 
+(defun npm-readme (module)
+  "Opens a new buffer with the readme of the given module."
+  (interactive "sModule name: ")
+  (let ((buffer (get-buffer-create (generate-new-buffer-name "README.md"))))
+    (pop-to-buffer buffer)
+    (insert (shell-command-to-string (concat "npm --cache-min=999999999 info " module " readme")))
+    (with-current-buffer buffer (funcall 'markdown-mode))
+    (beginning-of-buffer)
+    (kill-line)
+    )
+  )
+
 ;; eval-and-replace
 ;; via http://emacsredux.com/blog/2013/06/21/eval-and-replace/
 (defun eval-and-replace ()
@@ -90,12 +102,27 @@
 ;; org-mode
 (setq org-log-done 'time)
 (setq org-startup-indented t)
-(setq org-agenda-files (list "~/new.org" "~/dd/dd.org" "~/dd/dd.org_archive"))
+(setq org-agenda-files (list "~/dd/dd.org" "~/dd/dd.org_archive"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+(setq org-todo-keyword-faces
+      '(("PROJECT" . (:foreground "medium sea green" :weight bold :underline t))
+        ("WAITING" . "dark orange")))
 (setq org-agenda-start-on-weekday nil)
 (setq org-ellipsis "⤷")
+
+;(setq org-agenda-custom-commands
+;      '(("h" "Agenda and Home-related tasks"
+;         ((agenda)
+;          (tags-todo "home")
+;          (tags "garden"
+;                ((org-agenda-sorting-strategy '(priority-up)))))
+;         ((org-agenda-sorting-strategy '(priority-down))))
+;        ("o" "Agenda and Office-related tasks"
+;         ((agenda)
+;          (tags-todo "work")
+;          (tags "office")))))
 
 ;; Always make sure an 'Effort' is set when clocking in to a task.
 (add-hook 'org-clock-in-prepare-hook
@@ -137,7 +164,6 @@
  '(custom-safe-themes
    (quote
     ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
- '(org-agenda-files (quote ("~/todo.org")))
  '(org-deadline-warning-days 5)
  '(org-default-notes-file "~/life.org")
  '(org-habit-graph-column 45)
@@ -145,6 +171,7 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+ '(package-selected-packages (quote (paredit cider markdown-mode magit)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
