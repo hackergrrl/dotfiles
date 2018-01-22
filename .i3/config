@@ -9,11 +9,13 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# make all windows float
+#for_window [class="[.]*"] floating enable
+
 set $mod Mod4
 set $alt Mod1
 
 # class           border    bg        text      indicator   child_border
-client.focused    #005577   #005577   #FFFFFF   #0099FF     #005599
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -44,7 +46,8 @@ bindsym $mod+d exec "dillo"
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run -fn "Dejuvu Sans Mono 14"
+bindsym $mod+p exec dmenu_run -i -fn "Dejavu Sans Mono:medium:size=13"
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -158,34 +161,32 @@ bar {
   status_command i3status
 	position top
   colors {
-    # background         #030318
-    # focused_workspace  #2787A8 #474796 #FFFFFF
-    background         #180318
-    focused_workspace  #D82798 #A61766 #FFFFFF
+    separator #666666
+    background #222222
+    statusline #dddddd
+    focused_workspace #0088CC #0088CC #ffffff
+    active_workspace #333333 #333333 #ffffff
+    inactive_workspace #333333 #333333 #888888
+    urgent_workspace #2f343a #900000 #ffffff
   }
 }
 
 # green
-# client.focused    #277727   #177717   #FFFFFF   #2FFF2F     #007900
-#   colors {
-#     background         #031803
-#     focused_workspace  #279827 #176617 #FFFFFF
-#   }
+#
+#
 
 # magenta
-# client.focused    #772777   #771777   #FFFFFF   #FF27FF     #790079
+#
 # bar {
-#   colors {
-#     background         #180318
-#     focused_workspace  #982798 #661766 #FFFFFF
-#   }
+#
 # }
 
 # pink
-client.focused    #AA1777   #AA1777   #FFFFFF   #FF27AF     #AA0079
 # bar {
-#   colors {
-#     background         #180318
-#     focused_workspace  #982798 #661766 #FFFFFF
-#   }
+#
 # }
+
+client.focused #0088CC #0088CC #ffffff #dddddd
+client.focused_inactive #333333 #333333 #888888 #292d2e
+client.unfocused #333333 #333333 #888888 #292d2e
+client.urgent #2f343a #900000 #ffffff #900000
