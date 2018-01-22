@@ -2,5 +2,5 @@
 
 FILE=/sys/class/backlight/intel_backlight/brightness
 
-echo "$(cat ${FILE}) - 1000" | bc | sudo tee ${FILE}
+echo "$(cat ${FILE}) - 1200" | bc | sudo tee ${FILE}
 
