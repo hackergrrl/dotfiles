@@ -1,0 +1,48 @@
+browser "vimb"
+player mplayer
+download-path "~/Downloads/"
+max-downloads 3
+podcast-auto-enqueue no
+reload-time 60
+suppress-first-reload yes
+refresh-on-startup no
+always-display-description true
+display-article-progress yes
+goto-first-unread yes
+goto-next-feed no
+notify-program notify-send
+notify-always yes
+notify-format "newsbeuter: finished reload, %f unread feeds (%n unread articles total)"
+delete-read-articles-on-quit no
+
+bind-key a mark-feed-read
+unbind-key ^U
+bind-key ^U pageup
+unbind-key ^D
+bind-key ^D pagedown
+bind-key G end
+unbind-key g
+bind-key g home
+bind-key k up
+bind-key j down
+bind-key q quit
+unbind-key l
+bind-key l open
+unbind-key h
+
+#color   info        green cyan bold
+#color   listfocus   cyan black bold
+#color   listfocus_unread   white black bold
+# Color Scheme for Newsbeuter
+# Based mostly on the colors from the badwolf airline theme
+color article			default		default
+color background		default		default
+color info			color232	color39		bold
+color listfocus			color232	color154	bold
+color listfocus_unread		color232	color154	bold
+color listnormal		default		default
+color listnormal_unread		color165	color235	bold
+
+# article header
+highlight article ^(Feed|Title|Link|Date):.*$		color81		color235		bold
+#TODO:highlight article ^Feed:				color165	color235		bold
