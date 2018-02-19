@@ -38,7 +38,7 @@ unset mark_old  # Read/unread is good enough, thanks
 # Folder hooks {{{
 #
 ## show only unread by default
-folder-hook * push "<limit>~U<enter>"
+folder-hook .* push "<limit>~U<enter>"
 # }}}
 
 # Sidebar {{{
@@ -90,6 +90,7 @@ bind pager i        exit
 bind pager /        search
 bind pager k        previous-line
 bind pager j        next-line
+bind pager g        noop
 bind pager gg       top
 bind pager G        bottom
 bind pager J        next-entry
@@ -98,21 +99,24 @@ bind index,pager R  group-reply
 bind index <tab>    sync-mailbox
 bind index k        previous-entry
 bind index j        next-entry
+bind index g        noop
 bind index gg       first-entry
 bind index G        last-entry
 bind index \Cp      recall-message
 bind index <space>  collapse-thread
 
 ## hotkeys
-macro index xe ":set sendmail='msmtp -a eight45'; set from='sww@eight45.net'" "Send mail with SMTP"
-macro index xg ":set sendmail='msmtp -a gmail'; set from='stephen.whitmore@gmail.com'" "Send mail with SMTP"
-macro index xd ":set sendmail='msmtp -a dd'; set from='swhitmore@digital-democracy.org'" "Send mail with SMTP"
+bind index x noop
+macro index xe ":set sendmail='msmtp -a eight45'; set from='sww@eight45.net'; color status brightcolor39 color233" "Send mail with SMTP"
+macro index xg ":set sendmail='msmtp -a gmail'; set from='stephen.whitmore@gmail.com'; color status brightcolor37 color233" "Send mail with SMTP"
+macro index xd ":set sendmail='msmtp -a dd'; set from='swhitmore@digital-democracy.org'; color status brightcolor35 color233" "Send mail with SMTP"
 
 macro index U "l ~U<enter>"
 macro index A "l all<enter>"
 
 # force inbox sync
 # macro index si "<shell-escape>${HOME}/bin/mail_sync<enter>" "Sync Inbox"
+bind index s noop
 macro index se "<shell-escape>getmail<enter>" "Sync Inbox"
 
 # search via notmuch
