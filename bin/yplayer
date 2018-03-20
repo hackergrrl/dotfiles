@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+rm /tmp/youtube-tmp.mp4
+youtube-dl -f 18 "$1" -o /tmp/youtube-tmp.mp4
+mplayer /tmp/youtube-tmp.mp4

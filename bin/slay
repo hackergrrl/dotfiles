@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+PID=$(ps aux | grep picast | head -n 1 | cut  -d ' ' -f 7)
+kill $PID

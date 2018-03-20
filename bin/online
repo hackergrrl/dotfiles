@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+while ! nmap -p 80 eight45.net | grep -q '1 host up'; do
+  sleep 1
+done

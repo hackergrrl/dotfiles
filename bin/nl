@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+find node_modules/ -type l | grep -v '\.bin' | sed 's/node_modules\///g'
