@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# TODO: use '--user' to ask for password if not set
+if [ -z $GITHUB_GIST_TOKEN ]; then
+  echo 'The env var $GITHUB_GIST_TOKEN is not set.'
+  exit 1
+fi
+
+URL="https://api.github.com/gists?access_token=$GITHUB_GIST_TOKEN"
+
+# read stdin into a var
+IFS=NULL DATA=$(tee | sed 's/$/\\/' | tr '\n' 'n' | sed 's/"/\\"/g')
+
+PAYLOAD="{\"public\": true, \"files\": {\"file1\": { \"content\": \"$DATA\" }}}"
+
+curl -s -X POST $URL -d $PAYLOAD | jq -r .url | sed 's/.*\/\([a-z0-9]\+\)$/https:\/\/gist.github.com\/\1/'
+
+# manual: for token generation
+#curl https://api.github.com/authorizations --user "noffle" --data '{"scopes":["gist"],"note":"cli"}'
