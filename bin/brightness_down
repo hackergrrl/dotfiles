@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-FILE=/sys/class/backlight/intel_backlight/brightness
+FILE=/sys/class/backlight/radeon_bl0/brightness
+STEP=25
 
-echo "$(cat ${FILE}) - 1200" | bc | sudo tee ${FILE}
+echo "$(cat ${FILE}) - $STEP" | bc | sudo tee ${FILE}
 
