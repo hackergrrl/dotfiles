@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-PID=$(ps aux | grep picast | head -n 1 | cut  -d ' ' -f 7)
+PID=$(ps aux | grep $1 | head -n 1 | awk '{print $2}')
+echo $PID
 kill $PID
