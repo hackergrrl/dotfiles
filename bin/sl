@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-superlevel $1 createReadStream
+if [ $# -eq 0 ]; then
+  superlevel
+else
+  superlevel $1 createReadStream
+fi
