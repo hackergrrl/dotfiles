@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo 'USAGE: npp patch|minor|major'
+  exit 1
+fi
+
+dependency-check . && npm test && npm version $1 && npm publish && git p --follow-tags

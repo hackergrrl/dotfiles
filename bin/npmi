@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+MODULES=$(cat $1 | grep "require('.*')" | sed "s/.*require('\(.*\)')/\1/" | grep -v '^\.' | tr '\n' ' ')
+shift
+shift
+npm install $MODULES $@

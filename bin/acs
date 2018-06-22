@@ -1,0 +1,3 @@
+#!/bin/bash
+
+apt-cache search $1 | grep ".*${1}.* - "

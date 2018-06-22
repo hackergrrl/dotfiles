@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var account = process.argv[2]
+var memo = process.argv[3]
+
+var msg = {
+  type: 'mutual/credit',
+  account: account,
+  currency: 'kudos',
+  amount: 20,
+  memo: memo
+}
+
+console.log(JSON.stringify(msg))
