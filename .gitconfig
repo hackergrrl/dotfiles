@@ -4,6 +4,7 @@
 [alias]
 	di = diff
   p = push
+  pf = push --follow-tags
   a = add
   cm = commit
   co = checkout
@@ -23,3 +24,4 @@
   spush = "!git push origin && git push ssb"
 [push]
 	default = current
+	followTags = true

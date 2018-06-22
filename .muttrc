@@ -60,8 +60,6 @@ set index_format = "[%Z]  %D  %-25.20F  %s"
 mailboxes =eight45/INBOX \
           =eight45/Sent \
           =eight45/Drafts \
-          =cjdns \
-          =ssb \
           =GMail/INBOX
 #}}}
 

@@ -3,7 +3,7 @@ type = SimplePOP3SSLRetriever
 server = 198.199.97.80
 port = 995
 username = sww
-password_command = ("/usr/bin/pass","eight45/mail/sww@eight45.net")
+password_command = ("/usr/bin/pass","personal/eight45/mail/sww@eight45.net")
 
 [destination]
 type = Maildir

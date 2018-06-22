@@ -2,7 +2,7 @@
 
 var text = require('fs').readFileSync('/dev/stdin', 'utf8')
 
-var filters = require('./mail-filters')
+var filters = require('./mail_filters.js')
 
 var hits = filters.some((fn) => {
   return fn(text)

@@ -3,3 +3,5 @@ text/html; links -dump %s; nametemplate=%s.html; copiousoutput
 image/png; feh -. %s
 image/jpeg; feh -. %s
 image/jpg; feh -. %s
+image/jpg; feh -. %s
+application/octet-stream; zathura %s

@@ -21,9 +21,17 @@
 ;; Make META play nicely on X
 (setq x-alt-keysym 'meta)
 
+;; Insert lambda character
+(global-set-key (kbd "C-c la") 'insert-lambda)
+(defun insert-lambda ()
+  (interactive)
+  (insert "λ"))
+
 ;; Reload any loaded buffer if it changes on disk.
 (global-auto-revert-mode t)
 
+;; Easy no-prompt buffer kill
+(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
 (global-set-key (kbd "M-o") 'kill-this-buffer)
 
 ;; Easier buffer navigation.
@@ -38,8 +46,8 @@
   (other-window -1))
 
 ;; Default font.
-(set-face-attribute 'default nil :font "Ubuntu Mono" :height 120)
-(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 12.0"))
+(set-face-attribute 'default nil :font "Deja Vu Sans Mono" :height 100)
+(add-to-list 'default-frame-alist '(font .  "Deja Vu Sans Mono 10.0"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
@@ -91,7 +99,6 @@
              (current-buffer))
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
-(global-set-key (kbd "C-x e") 'eval-and-replace)
 
 ;; Save backup files to /tmp.
 (setq backup-directory-alist
@@ -102,7 +109,7 @@
 ;; org-mode
 (setq org-log-done 'time)
 (setq org-startup-indented t)
-(setq org-agenda-files (list "~/dd/dd.org" "~/dd/dd.org_archive"))
+(setq org-agenda-files (list "~/dd/dd.org" "~/masterplan.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
@@ -171,7 +178,9 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
- '(package-selected-packages (quote (paredit cider markdown-mode magit)))
+ '(package-selected-packages
+   (quote
+    (ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## slime paredit cider markdown-mode magit)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -206,3 +215,19 @@
 
 ;; I <3 visual line mode
 (global-visual-line-mode 1)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+
+;; Javascript
+(require 'flymake-jshint)
+(add-hook 'js-mode-hook
+          (lambda () (progn
+                       (flymake-mode t)
+                       (flycheck-select-checker 'javascript-standard))))
