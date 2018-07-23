@@ -4,6 +4,10 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
+;; Use user's $PATH
+;; TODO: not working?
+;(exec-path-from-shell-initialize)
+
 ;; Enable file encryption
 (require 'epa-file)
 (epa-file-enable)
@@ -46,8 +50,8 @@
   (other-window -1))
 
 ;; Default font.
-(set-face-attribute 'default nil :font "Deja Vu Sans Mono" :height 100)
-(add-to-list 'default-frame-alist '(font .  "Deja Vu Sans Mono 10.0"))
+(set-face-attribute 'default nil :font "Ubuntu Mono" :height 120)
+(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 12.0"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
@@ -99,6 +103,7 @@
              (current-buffer))
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
+(global-set-key (kbd "C-x e") 'eval-and-replace)
 
 ;; Save backup files to /tmp.
 (setq backup-directory-alist
@@ -112,7 +117,7 @@
 (setq org-agenda-files (list "~/dd/dd.org" "~/masterplan.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "Q(q)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
 (setq org-todo-keyword-faces
       '(("PROJECT" . (:foreground "medium sea green" :weight bold :underline t))
         ("WAITING" . "dark orange")))
@@ -180,7 +185,7 @@
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(package-selected-packages
    (quote
-    (ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## slime paredit cider markdown-mode magit)))
+    (org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## slime paredit cider markdown-mode magit)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -226,8 +231,73 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
 ;; Javascript
-(require 'flymake-jshint)
+(defun node/test-current-file ()
+  (interactive)
+  (let ((p (replace-regexp-in-string "^Directory " "" (pwd))))
+    (cd "..")
+    (message "Testing %s.." (buffer-name))
+    (shell-command (format "node test/%s" (buffer-name)))
+    (cd p)
+    (other-window 1)))
+(defun node/npm-test ()
+  (interactive)
+  (message "npm test'ing..")
+  (shell-command "npm test")
+  (other-window 1))
+
+;; linting
 (add-hook 'js-mode-hook
           (lambda () (progn
+                       (global-set-key (kbd "C-x n t") 'node/test-current-file)
+                       (global-set-key (kbd "C-x n T") 'node/npm-test)
                        (flymake-mode t)
                        (flycheck-select-checker 'javascript-standard))))
+
+(defun js-insert-require (module)
+  "Insert a require statement for a module at the top of the file."
+  (interactive "sModule name: ")
+  (save-excursion
+    (goto-char 0)
+    (when (not (equal (current-word) "var")) (progn
+                                               (insert "\n")
+                                               (goto-char 0)))
+    (insert (format "var %s = require('%s')\n"
+                    (word-to-identifier module)
+                    module))))
+
+(defun word-to-js-identifier (word)
+  "Converts a word, potentially hyphenated, into a valid Javascript identifier."
+  (let ((parts (split-string word "-")))
+    (string-join (cons (first parts) (mapcar #'capitalize (rest parts))) "")))
+
+;; SSB
+(defun ssb-publish-post-buffer ()
+  (interactive)
+  (with-current-buffer (current-buffer)
+    (buffer-string))
+  (ssb-publish-post (buffer-string)))
+
+(defun ssb-publish-post (text)
+  (let ((santizied
+         (replace-regexp-in-string "\n" "\\\\n"
+                                   (replace-regexp-in-string "\""
+                                                             "\\\\\""
+                                                             text))))
+    (write-region
+     (format "{ \"type\": \"post\", \"text\": \"%s\" }" santizied)
+     nil
+     "/tmp/ssb-post"))
+  (shell-command-to-string "sbot publish . < /tmp/ssb-post"))
+
+;; org-notify
+;(add-to-list 'load-path "~/.emacs.d/modules/")
+;(require 'org-notify)
+;(org-notify-start)
+;(org-notify-add 'appt
+;                '(:time "-1s" :period "20s" :duration 10
+;                  :actions (-message -ding))
+;                '(:time "15m" :period "2m" :duration 100
+;                  :actions -notify)
+;                '(:time "2h" :period "5m" :actions -message)
+;                '(:time "3d" :actions -email))
+
