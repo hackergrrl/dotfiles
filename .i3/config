@@ -19,7 +19,7 @@ set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-#font pango:monospace 8
+# font pango:monospace 12
 # font -misc-fixed-medium-r-normal--12-120-75-75-C-70-iso10646-1
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -158,41 +158,41 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
-#  status_command i3status
-#	position top
-#  colors {
-#    separator #666666
-#    background #222222
-#    statusline #dddddd
-#    focused_workspace #0088CC #0088CC #ffffff
-#    active_workspace #333333 #333333 #ffffff
-#    inactive_workspace #333333 #333333 #888888
-#    urgent_workspace #2f343a #900000 #ffffff
-#  }
-#}
-
-#client.focused #0088CC #0088CC #ffffff #dddddd
-#client.focused_inactive #333333 #333333 #888888 #292d2e
-#client.unfocused #333333 #333333 #888888 #292d2e
-#client.urgent #2f343a #900000 #ffffff #900000
-
 bar {
-      position top
-      status_command i3status
-      colors {
-        background #002b36
-        statusline #839496
-        separator  #586e75
-        focused_workspace  #b58900 #b58900 #002b36
-        active_workspace   #586e75 #586e75 #002b36
-        inactive_workspace #073642 #002b36 #839496
-        urgent_workspace   #dc322f #dc322f #fdf6e3
-      }
+  status_command "i3status"
+	position top
+  colors {
+    separator #666666
+    background #222222
+    statusline #ffffff
+    focused_workspace #0088CC #0088CC #ffffff
+    active_workspace #333333 #333333 #ffffff
+    inactive_workspace #333333 #333333 #888888
+    urgent_workspace #2f343a #900000 #ffffff
+  }
 }
 
+client.focused #0088CC #0088CC #ffffff #dddddd
+client.focused_inactive #333333 #333333 #888888 #292d2e
+client.unfocused #333333 #333333 #888888 #292d2e
+client.urgent #2f343a #900000 #ffffff #900000
 
-client.focused          #002b36 #586e75 #fdf6e3 #268bd2
-client.focused_inactive #002b36 #073642 #839496 #073642
-client.unfocused        #002b36 #073642 #839496 #073642
-client.urgent           #002b36 #dc322f #fdf6e3 #002b36
+#bar {
+#      position top
+#      status_command i3status
+#      colors {
+#        background #002b36
+#        statusline #839496
+#        separator  #586e75
+#        focused_workspace  #b58900 #b58900 #002b36
+#        active_workspace   #586e75 #586e75 #002b36
+#        inactive_workspace #073642 #002b36 #839496
+#        urgent_workspace   #dc322f #dc322f #fdf6e3
+#      }
+#}
+
+
+#client.focused          #002b36 #586e75 #fdf6e3 #268bd2
+#client.focused_inactive #002b36 #073642 #839496 #073642
+#client.unfocused        #002b36 #073642 #839496 #073642
+#client.urgent           #002b36 #dc322f #fdf6e3 #002b36

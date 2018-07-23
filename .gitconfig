@@ -25,3 +25,5 @@
 [push]
 	default = current
 	followTags = true
+[github]
+	user = noffle
