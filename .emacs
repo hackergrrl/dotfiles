@@ -4,10 +4,6 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-;; Use user's $PATH
-;; TODO: not working?
-;(exec-path-from-shell-initialize)
-
 ;; Enable file encryption
 (require 'epa-file)
 (epa-file-enable)
@@ -83,9 +79,9 @@
 (defun npm-readme (module)
   "Opens a new buffer with the readme of the given module."
   (interactive "sModule name: ")
-  (let ((buffer (get-buffer-create (generate-new-buffer-name "README.md"))))
+  (let ((buffer (get-buffer-create (generate-new-buffer-name "*README.md*"))))
     (pop-to-buffer buffer)
-    (insert (shell-command-to-string (concat "npm --cache-min=999999999 info " module " readme")))
+    (insert (shell-command-to-string (concat "npm --cache-min=999999999 info " module " readme &")))
     (with-current-buffer buffer (funcall 'markdown-mode))
     (beginning-of-buffer)
     (kill-line)
@@ -169,13 +165,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(custom-safe-themes
    (quote
-    ("2f5b8b4d2f776fd59c9f9a1d6a45cdb75a883c10a9426f9a50a4fea03b1e4d89" default)))
+    ("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
+ '(frame-background-mode (quote light))
+ '(org-clock-clocktable-default-properties (quote (:maxlevel 2 :scope subtree)))
  '(org-deadline-warning-days 5)
  '(org-default-notes-file "~/life.org")
  '(org-habit-graph-column 45)
@@ -185,7 +179,7 @@
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(package-selected-packages
    (quote
-    (org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## slime paredit cider markdown-mode magit)))
+    (json-mode rainbow-delimiters org-alert color-theme-solarized org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## slime paredit cider markdown-mode magit)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -214,8 +208,8 @@
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
 
-(add-to-list 'load-path "~/.emacs.d/themes/emacs-color-theme-solarized/")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
+;(add-to-list 'load-path "~/.emacs.d/themes/emacs-color-theme-solarized/")
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 ;(load-theme 'solarized t)
 
 ;; I <3 visual line mode
@@ -227,8 +221,11 @@
  ;; If there is more than one, they won't work right.
  )
 
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(defun slime! ()
+  (interactive)
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (slime))
 
 ;; Javascript
 (defun node/test-current-file ()
@@ -236,21 +233,35 @@
   (let ((p (replace-regexp-in-string "^Directory " "" (pwd))))
     (cd "..")
     (message "Testing %s.." (buffer-name))
-    (shell-command (format "node test/%s" (buffer-name)))
+    (shell-command (format "node test/%s &" (buffer-name)))
     (cd p)
     (other-window 1)))
 (defun node/npm-test ()
   (interactive)
   (message "npm test'ing..")
-  (shell-command "npm test")
+  (shell-command "npm test &")
   (other-window 1))
+(defun node/toggle-line-comment ()
+  (interactive)
+  (save-excursion
+    (move-beginning-of-line 1)
+    (if (looking-at "^//")
+        (delete-char 2)
+      (insert "//"))))
 
 ;; linting
 (add-hook 'js-mode-hook
           (lambda () (progn
-                       (global-set-key (kbd "C-x n t") 'node/test-current-file)
-                       (global-set-key (kbd "C-x n T") 'node/npm-test)
-                       (flymake-mode t)
+                       (define-key js-mode-map
+                         (kbd "C-x n t") 'node/test-current-file)
+                       (define-key js-mode-map
+                         (kbd "C-x n T") 'node/npm-test)
+                       (define-key js-mode-map
+                         (kbd "C-c C-c") 'node/toggle-line-comment)
+                       (define-key js-mode-map
+                         (kbd "C-x n r") 'npm-readme)
+                       (flycheck-mode)
+                       (wmac-mode)
                        (flycheck-select-checker 'javascript-standard))))
 
 (defun js-insert-require (module)
@@ -301,3 +312,32 @@
 ;                '(:time "2h" :period "5m" :actions -message)
 ;                '(:time "3d" :actions -email))
 
+
+(defun distraction-no ()
+  (interactive)
+  (scroll-bar-mode 0)    ; Turn off scrollbars.
+  (tool-bar-mode 0)      ; Turn off toolbars.
+  (fringe-mode 0)        ; Turn off left and right fringe cols.
+  (menu-bar-mode 0)      ; Turn off menus.
+  (toggle-frame-fullscreen))
+
+(defun distraction-yes ()
+  (interactive)
+  (scroll-bar-mode 1)    ; Turn on scrollbars.
+  (tool-bar-mode 0)      ; Turn off toolbars.
+  (fringe-mode 1)        ; Turn on left and right fringe cols.
+  (menu-bar-mode 1)      ; Turn on menus.
+  (toggle-frame-fullscreen))
+
+;; enable mail-mode for mutt emails
+(add-to-list 'auto-mode-alist '("mutt-" . mail-mode))
+
+;; EXPERIMENT: writer macros for JS
+(load "~/dev/writer-macros/writer-macros.el")
+
+;; org-alert
+(require 'org-alert)
+(setq alert-default-style 'libnotify)
+
+;; Use user's $PATH
+(exec-path-from-shell-initialize)
