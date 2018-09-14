@@ -37,6 +37,7 @@ Plug 'tpope/vim-commentary'
 Plug 'fatih/vim-go'
 Plug 'vim-scripts/paredit.vim'
 Plug 'vim-scripts/VimClojure'
+Plug 'wesgibbs/vim-irblack'
 call plug#end()
 
 " 100ms delay (or: let's me hit O and not need to wait around)
@@ -45,7 +46,7 @@ set ttimeoutlen=100
 let mapleader = "-"
 let maplocalleader = "_"
 
-colorscheme badwolf
+colorscheme ir_black
 set background=dark
 
 " Backups
