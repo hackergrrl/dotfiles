@@ -4,14 +4,10 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-;; Enable file encryption
-(require 'epa-file)
-(epa-file-enable)
-
 ;; Package management
 (package-initialize)
-;(add-to-list 'package-archives
-;             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
@@ -47,7 +43,7 @@
 
 ;; Default font.
 (set-face-attribute 'default nil :font "Ubuntu Mono" :height 120)
-(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 12.0"))
+;;(add-to-list 'default-frame-alist '(font .  "Ubuntu Mono 12.0"))
 
 ;; Default browser.
 (setq browse-url-browser-function 'browse-url-generic
@@ -179,7 +175,7 @@
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(package-selected-packages
    (quote
-    (json-mode rainbow-delimiters org-alert color-theme-solarized org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## slime paredit cider markdown-mode magit)))
+    (protobuf-mode keyfreq json-mode rainbow-delimiters color-theme-solarized org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## paredit cider markdown-mode magit)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
@@ -335,9 +331,25 @@
 ;; EXPERIMENT: writer macros for JS
 (load "~/dev/writer-macros/writer-macros.el")
 
-;; org-alert
-(require 'org-alert)
-(setq alert-default-style 'libnotify)
-
 ;; Use user's $PATH
 (exec-path-from-shell-initialize)
+
+(defun open-cl-project (name)
+  ;; Q: how to wait for the above eval to finish before clearing the buffer?
+  "Open a common lisp project. Assumes a location of \"~/dev/$NAME\", and that it is symlinked to from \"~/quicklisp/local-projects/\"."
+  (interactive "sProject name: ")
+  ;; go to the project directory
+  (cd (concat "~/dev/" name))
+
+  ;; start slime
+  (slime!)
+
+  ;; idle until slime and sbcl have started and are ready
+  (while (not (slime-connected-p))
+    (sleep-for 1))
+
+  ;; quickload the project (ok, "system") and make it the current *PACKAGE*
+  (let ((program (concat "(progn (ql:quickload :" name ") (in-package :" name "))")))
+    (slime-repl-eval-string program)))
+
+(set-face-attribute 'default nil :font "Ubuntu Mono" :height 120)
