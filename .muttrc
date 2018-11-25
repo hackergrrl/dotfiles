@@ -67,7 +67,7 @@ mailboxes =eight45/INBOX \
 set fast_reply
 set sendmail_wait = 0 # wait for sending to successfully finish, because email is important
 
-set sendmail = "/usr/bin/env msmtp"
+set sendmail = "msmtpq"
 # }}}
 
 # Viewing mail {{{

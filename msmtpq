@@ -497,8 +497,7 @@ send_mail() {    # <-- all mail args ; mail text via TMP
 ## -- entry point
 #
 
-if (( $# == 0 )); then
-# if [ ! "$1" = '--q-mgmt' ] ; then    # msmtpq - sendmail mode
+if [ ! "$1" = '-q' ] ; then    # msmtpq - sendmail mode
   lock_queue                         # lock here
   make_id                            # make base queue filename id for this mail
   # write mail body text to queue .mail file
@@ -511,6 +510,7 @@ if (( $# == 0 )); then
   send_mail "$@"                     # send the mail if possible, queue it if not
   lock_queue -u                      # unlock here
 else                                 # msmtp-queue - queue management mode
+  shift
   OP=${1:1}                          # trim off first char of OP arg
   case "$OP" in                      # sort ops ; run according to spec
     s)    lock_queue
