@@ -3,4 +3,6 @@
 MODULES=$(cat $1 | grep "require('.*')" | sed "s/.*require('\(.*\)')/\1/" | grep -v '^\.' | tr '\n' ' ')
 shift
 shift
+echo "Installing: $MODULES"
+echo
 npm install $MODULES $@
