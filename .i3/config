@@ -165,14 +165,14 @@ bar {
     separator #666666
     background #222222
     statusline #ffffff
-    focused_workspace #008800 #008800 #ffffff
+    focused_workspace #008888 #008888 #ffffff
     active_workspace #333333 #333333 #ffffff
     inactive_workspace #333333 #333333 #888888
     urgent_workspace #2f343a #900000 #ffffff
   }
 }
 
-client.focused #008800 #008800 #ffffff #dddddd
+client.focused #008888 #008888 #ffffff #dddddd
 client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused #333333 #333333 #888888 #292d2e
 client.urgent #2f343a #900000 #ffffff #900000

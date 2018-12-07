@@ -21,7 +21,7 @@
   s = stash
   sp = stash pop
   ## clone with: 'git clone git://${IP}/ my-repo'
-  serve = "!server(){ git daemon --verbose --export-all --base-path=. --reuseaddr $@; }; server"
+  serve = "!server(){ git daemon --verbose --export-all --base-path=. --reuseaddr $@; }; echo git://localhost:9418/; server"
   spush = "!git push origin && git push ssb"
 [push]
 	default = current
