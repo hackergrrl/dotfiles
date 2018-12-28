@@ -6,3 +6,5 @@ pcm.!default {
   device 7
 }
 
+# the key was to use the details from 'aplay -l', not 'aplay -L'
+
