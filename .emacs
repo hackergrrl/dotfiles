@@ -157,7 +157,7 @@
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(package-selected-packages
    (quote
-    (protobuf-mode keyfreq json-mode rainbow-delimiters color-theme-solarized org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## paredit cider markdown-mode magit)))
+    (doom-themes slime protobuf-mode keyfreq json-mode rainbow-delimiters color-theme-solarized org gh ac-js2 js2-mode exec-path-from-shell flycheck google-maps ledger-mode ## paredit cider markdown-mode magit)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
