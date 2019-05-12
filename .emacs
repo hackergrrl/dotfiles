@@ -17,12 +17,6 @@
 ;; Make META play nicely on X
 (setq x-alt-keysym 'meta)
 
-;; Insert lambda character
-(global-set-key (kbd "C-c la") 'insert-lambda)
-(defun insert-lambda ()
-  (interactive)
-  (insert "λ"))
-
 ;; Reload any loaded buffer if it changes on disk.
 (global-auto-revert-mode t)
 
@@ -72,18 +66,6 @@
   (interactive "sURL to fetch: ")
   (insert (shell-command-to-string (concat "curl -Ls " url))))
 
-(defun npm-readme (module)
-  "Opens a new buffer with the readme of the given module."
-  (interactive "sModule name: ")
-  (let ((buffer (get-buffer-create (generate-new-buffer-name "*README.md*"))))
-    (pop-to-buffer buffer)
-    (insert (shell-command-to-string (concat "npm --cache-min=999999999 info " module " readme &")))
-    (with-current-buffer buffer (funcall 'markdown-mode))
-    (beginning-of-buffer)
-    (kill-line)
-    )
-  )
-
 ;; eval-and-replace
 ;; via http://emacsredux.com/blog/2013/06/21/eval-and-replace/
 (defun eval-and-replace ()
@@ -106,10 +88,10 @@
 ;; org-mode
 (setq org-log-done 'time)
 (setq org-startup-indented t)
-(setq org-agenda-files (list "~/dd/dd.org" "~/masterplan.org"))
+(setq org-agenda-files (list "~/dd/dd.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "Q(q)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "Q(q)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "INFO" "|" "DONE(d!)" "CANCELLED(x@/!)")))
 (setq org-todo-keyword-faces
       '(("PROJECT" . (:foreground "medium sea green" :weight bold :underline t))
         ("WAITING" . "dark orange")))
@@ -208,6 +190,9 @@
 ;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 ;(load-theme 'solarized t)
 
+;(load-theme 'sanityinc-tomorrow-blue t)
+(load-theme 'sanityinc-tomorrow-day t)
+
 ;; I <3 visual line mode
 (global-visual-line-mode 1)
 (custom-set-faces
@@ -229,9 +214,24 @@
   (let ((p (replace-regexp-in-string "^Directory " "" (pwd))))
     (cd "..")
     (message "Testing %s.." (buffer-name))
-    (shell-command (format "node test/%s &" (buffer-name)))
+    (shell-command (format "node %s &" (buffer-file-name)))
     (cd p)
     (other-window 1)))
+(defun npm-readme (module)
+  "Opens a new buffer with the readme of the given module."
+  (interactive "sModule name: ")
+  (let ((buffer (get-buffer-create (generate-new-buffer-name "*README.md*"))))
+    (pop-to-buffer buffer)
+    (insert (shell-command-to-string (concat "npm --cache-min=999999999 info " module " readme &")))
+    (with-current-buffer buffer (funcall 'markdown-mode))
+    (beginning-of-buffer)
+    (kill-line)
+    )
+  )
+(defun node/npm-publish (semver)
+  "Opens a new buffer with the readme of the given module."
+  (interactive "sSemver (patch,minor,major): ")
+  (shell-command (format "npp %s &" semver)))
 (defun node/npm-test ()
   (interactive)
   (message "npm test'ing..")
@@ -249,6 +249,11 @@
 (add-hook 'js-mode-hook
           (lambda () (progn
                        (define-key js-mode-map
+                         (kbd "C-x n P")
+                         (lambda (semver)
+                           (interactive "sSemver: ")
+                           (funcall node/npm-publish semver)))
+                       (define-key js-mode-map
                          (kbd "C-x n t") 'node/test-current-file)
                        (define-key js-mode-map
                          (kbd "C-x n T") 'node/npm-test)
@@ -257,8 +262,9 @@
                        (define-key js-mode-map
                          (kbd "C-x n r") 'npm-readme)
                        (flycheck-mode)
-                       (wmac-mode)
                        (flycheck-select-checker 'javascript-standard))))
+                       ;(load "~/dev/writer-macros/writer-macros.el")
+                       ;(wmac-mode)
 
 (defun js-insert-require (module)
   "Insert a require statement for a module at the top of the file."
@@ -328,9 +334,6 @@
 ;; enable mail-mode for mutt emails
 (add-to-list 'auto-mode-alist '("mutt-" . mail-mode))
 
-;; EXPERIMENT: writer macros for JS
-(load "~/dev/writer-macros/writer-macros.el")
-
 ;; Use user's $PATH
 (exec-path-from-shell-initialize)
 
@@ -346,10 +349,23 @@
 
   ;; idle until slime and sbcl have started and are ready
   (while (not (slime-connected-p))
-    (sleep-for 1))
+    (sleep-for 1 500))
 
   ;; quickload the project (ok, "system") and make it the current *PACKAGE*
   (let ((program (concat "(progn (ql:quickload :" name ") (in-package :" name "))")))
     (slime-repl-eval-string program)))
 
+(global-set-key (kbd "C-c C-c C-l C-p") 'open-cl-project)
+
 (set-face-attribute 'default nil :font "Ubuntu Mono" :height 120)
+
+;; Offline HyperSpec
+(setq common-lisp-hyperspec-root (expand-file-name "~/.emacs.d/HyperSpec/"))
+
+;; Smoother mouse wheel scrolling
+;; via https://www.emacswiki.org/emacs/SmoothScrolling
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse 't
+      scroll-conservatively 10000
+      auto-window-vscroll auto-window-vscroll)
