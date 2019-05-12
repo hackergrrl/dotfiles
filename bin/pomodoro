@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
 
-APP='Pomodoro'
-
-SECONDS=0
-MINUTES=25
-HOURS=0
-
-DURATION=$(echo "${SECONDS} + ${MINUTES}*60 + ${HOURS}*60*60" | bc)
-
-TICK=300
-
-for i in $(seq 0 ${TICK} ${DURATION})
-do
-  notify-send $APP "$(echo "($DURATION - $i) / 60" | bc) minutes left."
-  sleep ${TICK}
-done
-
-notify-send $APP "$(echo "$DURATION / 60" | bc) minutes have elapsed."
+notify-send "pomodoro STARTED -- you can do it!"
+sleep 900
+notify-send '10 minutes left'
+sleep 420
+notify-send '3 minutes left'
+sleep 180
+notify-send 'pomodoro COMPLETE -- nice job cutie ^__^'
