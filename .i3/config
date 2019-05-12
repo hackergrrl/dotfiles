@@ -12,6 +12,7 @@
 # make all windows float
 #for_window [class="[.]*"] floating enable
 
+# internal kb
 set $mod Mod4
 set $alt Mod1
 
@@ -42,12 +43,13 @@ new_window 1pixel
 
 # start a terminal
 bindsym $mod+Return exec "termite"
+bindsym $mod+Shift+Return exec "termite --config ~/.config/termite/config.light"
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run -i -fn "Dejavu Sans Mono:medium:size=13" -sb darkgreen
+bindsym $mod+p exec dmenu_run -i -fn "Dejavu Sans Mono:medium:size=13" -sb darkcyan
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -156,8 +158,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
 bar {
   status_command "i3status"
 	position top
@@ -171,28 +171,25 @@ bar {
     urgent_workspace #2f343a #900000 #ffffff
   }
 }
-
 client.focused #008888 #008888 #ffffff #dddddd
 client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused #333333 #333333 #888888 #292d2e
 client.urgent #2f343a #900000 #ffffff #900000
 
-#bar {
-#      position top
-#      status_command i3status
-#      colors {
-#        background #002b36
-#        statusline #839496
-#        separator  #586e75
-#        focused_workspace  #b58900 #b58900 #002b36
-#        active_workspace   #586e75 #586e75 #002b36
-#        inactive_workspace #073642 #002b36 #839496
-#        urgent_workspace   #dc322f #dc322f #fdf6e3
-#      }
-#}
-
-
-#client.focused          #002b36 #586e75 #fdf6e3 #268bd2
-#client.focused_inactive #002b36 #073642 #839496 #073642
-#client.unfocused        #002b36 #073642 #839496 #073642
-#client.urgent           #002b36 #dc322f #fdf6e3 #002b36
+# bar {
+#       position top
+#       status_command i3status
+#       colors {
+#         background #002b36
+#         statusline #839496
+#         separator  #586e75
+#         focused_workspace  #b58900 #b58900 #002b36
+#         active_workspace   #586e75 #586e75 #002b36
+#         inactive_workspace #073642 #002b36 #839496
+#         urgent_workspace   #dc322f #dc322f #fdf6e3
+#       }
+# }
+# client.focused          #002b36 #586e75 #fdf6e3 #268bd2
+# client.focused_inactive #002b36 #073642 #839496 #073642
+# client.unfocused        #002b36 #073642 #839496 #073642
+# client.urgent           #002b36 #dc322f #fdf6e3 #002b36
