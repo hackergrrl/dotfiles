@@ -5,4 +5,15 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-dependency-check . && npm test && npm version $1 && npm publish && git p --follow-tags
+dependency-check . && npm test
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+npm publish --color=always --dry-run | head -n -1
+read -p 'publish (y/N) ' answer
+if [[ -n $answer && $answer == "y" ]]; then
+  npm version $1 && npm publish -q && git p --follow-tags
+else
+  echo 'aborting publish'
+fi
