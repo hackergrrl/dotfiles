@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+NAME=$(echo 'enter account name (/w username)' | dmenu)
+pass generate $NAME -n 25
+notify-send "created account + password for ${NAME}"
+pass show -c "${NAME}" 2>/dev/null
+notify-send "password copied to clipboard"

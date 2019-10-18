@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+rm -f /tmp/video.mp4
+youtube-dl -f 18 --no-part -o /tmp/video.mp4 $1 &
+sleep 10
+picast /tmp/video.mp4

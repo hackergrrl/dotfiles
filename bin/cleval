@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+TMP=/tmp/eval.tmp
+
+EXPR=$(echo 'Enter expression' | dmenu)
+echo "(format t \"~A~%\" ${EXPR})" > $TMP
+RESULT=$(ecl -shell $TMP)
+notify-send "eval result" $RESULT

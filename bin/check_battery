@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PERCENT=$(acpi | sed 's/.* \([0-9]*\)%.*/\1/')
+
+if [ $PERCENT -le 3 ]; then
+  notify-send -u critical "BATTERY LEVEL CRITICAL: SUSPENDING IN 2 MINUTES"
+  sleep 120
+  # TODO: check if battery status is CHARGING now & abort
+  sudo pm-suspend
+elif [ $PERCENT -le 4 ]; then
+  notify-send -u critical "BATTERY LEVEL CRITICAL (suspending at < 3%)"
+elif [ $PERCENT -le 5 ]; then
+  notify-send -u critical "BATTERY LEVEL CRITICAL"
+elif [ $PERCENT -le 10 ]; then
+  notify-send -u normal "BATTERY LEVEL VERY LOW"
+elif [ $PERCENT -le 15 ]; then
+  notify-send -u low "Battery level low"
+fi
