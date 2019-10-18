@@ -1,18 +1,32 @@
 #!/bin/bash
 
+# bail if no semver is given
 if [ $# -eq 0 ]; then
   echo 'USAGE: npp patch|minor|major'
   exit 1
 fi
 
-dependency-check . && npm test
+# ensure all deps are present
+# XXX: depends on "npm i -g dependency-check" being installed
+dependency-check .
 if [ $? -ne 0 ]; then
   exit $?
 fi
 
+# ensure all tests pass
+npm test
+if [ $? -ne 0 ]; then
+  exit $?
+fi
+
+# do a dry-run report, so you can see what files are going to be bundled in the
+# release tarball
 npm publish --color=always --dry-run | head -n -1
+
+# prompt
 read -p 'publish (y/N) ' answer
 if [[ -n $answer && $answer == "y" ]]; then
+  # publish and push to remote
   npm version $1 && npm publish -q && git p --follow-tags
 else
   echo 'aborting publish'

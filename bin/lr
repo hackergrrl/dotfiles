@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ls -lt $1 | head -n 10
+ls -lt $1 | head -n 15

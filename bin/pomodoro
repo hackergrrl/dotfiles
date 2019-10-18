@@ -2,8 +2,8 @@
 
 notify-send "pomodoro STARTED -- you can do it!"
 sleep 900
-notify-send '10 minutes left'
+notify-send '10 minutes left' -t 20000
 sleep 420
-notify-send '3 minutes left'
+notify-send '3 minutes left' -t 20000
 sleep 180
-notify-send 'pomodoro COMPLETE -- nice job cutie ^__^'
+notify-send 'pomodoro COMPLETE -- nice job cutie ^__^' -t 60000

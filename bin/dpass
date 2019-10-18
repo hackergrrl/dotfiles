@@ -4,11 +4,20 @@
 
 shopt -s nullglob globstar
 
-nb='#121212'
-nf='#696969'
-sb='#121212'
-sf='#C34EC9'
+# jwr
+# nb='#121212'
+# nf='#696969'
+# sb='#121212'
+# sf='#C34EC9'
+# font="Dejavu Sans Mono:medium:size=13"
+
+# grayscale
+sb='#555555'
+sf='#ffffff'
+nf='#ffffff'
+nb='#333333'
 font="Dejavu Sans Mono:medium:size=13"
+
 dmenucmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
 
 prefix=${PASSWORD_STORE_DIR:-~/.password-store}
