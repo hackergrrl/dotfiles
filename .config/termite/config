@@ -26,8 +26,6 @@ cursor_blink = off
 # "block", "underline" or "ibeam"
 cursor_shape = block
 
-# $BROWSER is used by default
-browser = qutebrowser
 
 # word characters used for word selection
 # (default if unset: all graphic non-punctuation/space characters)
@@ -62,6 +60,60 @@ color4 = #5050FF
 #color13 = #7F62B3
 #color14 = #47959E
 #color15 = #C0C0C0
+
+########## terminal.sexy default
+# special
+foreground      = #c5c8c6
+foreground_bold = #c5c8c6
+cursor          = #c5c8c6
+background      = #1d1f21
+# black
+color0  = #282a2e
+color8  = #373b41
+# red
+color1  = #a54242
+color9  = #cc6666
+# green
+color2  = #8c9440
+color10 = #b5bd68
+# yellow
+color3  = #de935f
+color11 = #f0c674
+# blue
+color4  = #5f819d
+color12 = #81a2be
+# magenta
+color5  = #85678f
+color13 = #b294bb
+# cyan
+color6  = #5e8d87
+color14 = #8abeb7
+# white
+color7  = #707880
+color15 = #c5c8c6
+
+########## soft era @ https://github.com/soft-aesthetic/soft-era
+#color0 = #1c1b28
+#color1 = #e46b85
+#color10 = #87b9ac
+#color11 = #fea3aa
+#color12 = #70a4dc
+#color13 = #e897b1
+#color14 = #a59bd8
+#color15 = #f8f3f3
+#color2 = #87b9ac
+#color3 = #fea3aa
+#color4 = #70a4dc
+#color5 = #e897b1
+#color6 = #a59bd8
+#color7 = #f8f3f3
+#color8 = #1c1b28
+#color9 = #e46b85
+#background = #f8f3f3
+#cursor = #e897b1
+#foreground = #bca3a4
+#highlight = #e8e4f9
+
 
 [hints]
 #font = DejaVu Sans Mono 13

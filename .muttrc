@@ -1,16 +1,16 @@
-  # Basics {{{
-  set realname="Stephen Whitmore"
-  set from=sww@eight45.net
+# Basics {{{
+set realname="Stephen Whitmore"
+set from=sww@eight45.net
 
-  set editor="vim"
+set editor="vim"
 
-  set charset = "UTF-8"
-  # set locale = "en_US.UTF-8"  # no longer exists?
-  set ascii_chars
+set charset = "UTF-8"
+# set locale = "en_US.UTF-8"  # no longer exists?
+set ascii_chars
 
-  # Ask before quitting, but default to yes
-  set quit=ask-yes
-  # }}}
+# Ask before quitting, but default to yes
+set quit=ask-yes
+# }}}
 
 # PGP {{{
 # source ~/.mutt/gpg2.rc
@@ -53,7 +53,7 @@ bind index,pager L   sidebar-open
 
 # Index {{{
 set date_format = "%m/%d  %H:%M"
-set index_format = "[%Z]  %D  %-25.20F  %s"
+set index_format = "[%Z] %D %-25.20F  %s"
 # }}}
 
 # Mailboxes {{{
@@ -118,7 +118,15 @@ bind index s noop
 macro index se "<shell-escape>getmail<enter>" "Sync Inbox"
 
 # search via notmuch
-macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py<enter><change-folder-readonly>~/.cache/mutt_results<enter>"
+#macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py<enter><change-folder-readonly>~/.cache/mutt_results<enter>"
+macro index S \
+  "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+  <shell-escape>notmuch-mutt -r --prompt search<enter>\
+  <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+  <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+  "notmuch: search mail"
+
+
 # }}}
 
 # Appearance {{{

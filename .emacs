@@ -29,8 +29,8 @@
 (global-set-key (kbd "M-k") 'previous-buffer)
 
 ;; Easier window navigation.
-(global-set-key (kbd "C-.") 'other-window)
-(global-set-key (kbd "C-,") 'prev-window)
+(global-set-key (kbd "C->") 'other-window)
+(global-set-key (kbd "C-<") 'prev-window)
 (defun prev-window ()
   (interactive)
   (other-window -1))
@@ -91,9 +91,11 @@
 (setq org-agenda-files (list "~/dd/dd.org"))
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "Q(q)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "INFO" "|" "DONE(d!)" "CANCELLED(x@/!)")))
+      '((sequence "TODO(t)" "NEXT-ACTION(n)" "STARTED(s@/!)" "Q(q)" "WAITING(w@/!)" "APPT(a)" "DEFERRED(D@/!)" "DELEGATED(g@/!)" "PROJECT(p)" "GOAL(G)" "INFO" "|" "DONE(d!)" "CANCELLED(x@/!)")))
 (setq org-todo-keyword-faces
-      '(("PROJECT" . (:foreground "medium sea green" :weight bold :underline t))
+      '(
+        ("PROJECT" . (:foreground "medium sea green" :weight bold :underline t))
+        ("GOAL" . (:foreground "medium sea green" :weight bold :underline t))
         ("WAITING" . "dark orange")))
 (setq org-agenda-start-on-weekday nil)
 (setq org-ellipsis "⤷")
@@ -369,3 +371,11 @@
       mouse-wheel-follow-mouse 't
       scroll-conservatively 10000
       auto-window-vscroll auto-window-vscroll)
+
+(defun surround (str)
+  (interactive "sSurround with chars: ")
+  (save-excursion
+    (backward-word)
+    (insert str)
+    (forward-word)
+    (insert str)))

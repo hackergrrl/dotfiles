@@ -8,6 +8,7 @@
   a = add
   cm = commit
   co = checkout
+  cop = checkout -p
   br = branch
   f = fetch
   rom = rebase origin/master
@@ -28,3 +29,5 @@
 	followTags = true
 [github]
 	user = noffle
+[init]
+	templateDir = /home/sww/.config/git/template

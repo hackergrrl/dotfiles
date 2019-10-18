@@ -1,4 +1,4 @@
-set pgp_autosign=yes
+set pgp_autosign=no
 set pgp_sign_as=sww@eight45.net
 set pgp_replyencrypt=yes
 set pgp_timeout=1800
