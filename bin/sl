@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [ $# -eq 0 ]; then
-  superlevel
-else
-  superlevel $1 createReadStream
-fi
