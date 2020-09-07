@@ -1,18 +1,38 @@
-#!/bin/sh
+#!/bin/bash
+
+function isCharging() {
+  acpi | grep Charging > /dev/null
+}
+
+if isCharging; then
+  exit 0
+fi
 
 PERCENT=$(acpi | sed 's/.* \([0-9]*\)%.*/\1/')
 
 if [ $PERCENT -le 3 ]; then
-  notify-send -u critical "BATTERY LEVEL CRITICAL: SUSPENDING IN 2 MINUTES"
-  sleep 120
-  # TODO: check if battery status is CHARGING now & abort
-  sudo pm-suspend
+  notify-send -u critical "Alert" "Battery level near complete discharge. Suspending in 2 minutes unless plugged in."
+
+  # 2 minutes in 5s intervals
+  for f in {1..24}; do
+    sleep 5
+    if isCharging; then
+      notify-send "Suspend aborted -- charger detected."
+      exit
+    fi
+  done
+
+  notify-send -u critical 'Battery is critically low! Suspending in 5 seconds!'
+  sleep 5
+  notify-send 'would suspend now'
+  # sudo pm-suspend
 elif [ $PERCENT -le 4 ]; then
-  notify-send -u critical "BATTERY LEVEL CRITICAL (suspending at < 3%)"
+  notify-send -u critical "Alert" "Battery level very low. System will begin suspend sequence when levels fall under 3%."
 elif [ $PERCENT -le 5 ]; then
-  notify-send -u critical "BATTERY LEVEL CRITICAL"
+  notify-send -u critical "Alert" "Battery level is very low."
 elif [ $PERCENT -le 10 ]; then
-  notify-send -u normal "BATTERY LEVEL VERY LOW"
+  notify-send -u normal "Warning" "Battery level is low."
 elif [ $PERCENT -le 15 ]; then
-  notify-send -u low "Battery level low"
+  notify-send -u low "Battery is at $PERCENT percent."
 fi
+
