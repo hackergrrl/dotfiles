@@ -10,7 +10,7 @@ fi
 
 PERCENT=$(acpi | sed 's/.* \([0-9]*\)%.*/\1/')
 
-if [ $PERCENT -le 3 ]; then
+if [ $PERCENT -le 4 ]; then
   notify-send -u critical "Alert" "Battery level near complete discharge. Suspending in 2 minutes unless plugged in."
 
   # 2 minutes in 5s intervals
@@ -26,13 +26,11 @@ if [ $PERCENT -le 3 ]; then
   sleep 5
   notify-send 'would suspend now'
   # sudo pm-suspend
-elif [ $PERCENT -le 4 ]; then
-  notify-send -u critical "Alert" "Battery level very low. System will begin suspend sequence when levels fall under 3%."
 elif [ $PERCENT -le 5 ]; then
+  notify-send -u critical "Alert" "Battery level very low. System will begin suspend sequence when levels fall under 4%."
+elif [ $PERCENT -le 7 ]; then
   notify-send -u critical "Alert" "Battery level is very low."
 elif [ $PERCENT -le 10 ]; then
   notify-send -u normal "Warning" "Battery level is low."
-elif [ $PERCENT -le 15 ]; then
-  notify-send -u low "Battery is at $PERCENT percent."
 fi
 
