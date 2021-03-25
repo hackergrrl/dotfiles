@@ -27,7 +27,9 @@ npm publish --color=always --dry-run | head -n -1
 read -p 'publish (y/N) ' answer
 if [[ -n $answer && $answer == "y" ]]; then
   # publish and push to remote
-  npm version $1 && npm publish -q && git p --follow-tags
+  # XXX: there are two 'git push'es in case there's a conflict with origin,
+  #      which prevents an accidental version bump
+  git p && npm version $1 && npm publish -q && git p --follow-tags
 else
   echo 'aborting publish'
 fi

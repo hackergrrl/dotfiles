@@ -163,7 +163,7 @@ color index brightblack color233 '~c "stephen.*@gmail.com"'
 color index cyan color233 '~t "@digital-democracy.org'
 color index cyan color233 '~c "@digital-democracy.org'
 color index cyan color233 '~t "digidem"'
-color index blue color233 '~t csc-.*@googlegroups.com'
+color index color39 color233 '~t csc-.*@googlegroups.com'
 color index yellow color233 '~t "cabal-club"'
 # }}}
 
